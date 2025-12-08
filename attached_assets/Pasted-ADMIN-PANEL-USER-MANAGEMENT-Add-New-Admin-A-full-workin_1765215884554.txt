@@ -1,0 +1,312 @@
+ADMIN PANEL – USER MANAGEMENT
+Add New Admin
+
+A full working form (not "Coming Soon")
+
+Creates new users with roles:
+
+Super Admin
+
+Admin
+
+Sales
+
+Delivery
+
+User
+
+Role-Based Access Control (RBAC)
+
+Super Admin can:
+
+Create admin/sales/delivery accounts
+
+Assign permissions using checkboxes:
+
+Products
+
+Orders
+
+Inquiries
+
+Users
+
+Sales Dashboard
+
+Delivery Dashboard
+
+Reviews/Questions
+
+Settings
+
+When a user logs in →
+SHOW ONLY THE PERMITTED SECTIONS in sidebar and dashboard.
+
+Admin can:
+
+Edit user details
+
+Edit password
+
+Delete user
+
+Customer Section
+
+Add Customer form
+
+Save to JSON DB + show in Admin Section
+
+Dashboard view for "Customers"
+
+When clicking on Customers → show dashboard
+
+Top menu should have "Dashboard / Customer List"
+
+Customer List shows: name, phone, email, address, orders count, joined date
+
+Delivery Agents Section
+
+Add Delivery Agent Form must work
+
+Save to JSON DB + show on admin frontend
+
+Fields:
+
+Name
+
+Mobile
+
+Email
+
+Aadhaar (Mandatory)
+
+PAN (Optional)
+
+Permanent Address
+
+Current Address
+
+Checkbox: "Permanent == Current"
+
+Delivery agent can log in at /delivery
+
+Delivery agent sees:
+
+Their dashboard
+
+Assigned orders
+
+Can update order status
+
+Can edit personal details (save to DB)
+
+────────────────────────
+
+2) PRODUCT MANAGEMENT
+
+Products → Add, Update must work.
+
+Fix issues:
+
+Images not showing
+
+Wrong image path
+
+Wrong price showing
+
+Editing product must allow:
+
+Name
+
+Images
+
+Price
+
+Discount price
+
+Category
+
+Stock
+
+Description
+
+Variants
+
+Add to cart must take actual product price, not ₹1 or ₹2
+
+Product detail page must show correct price + image everywhere
+
+When adding to cart → correct price + image must persist
+
+Apply this rule for every product
+
+Admin Panel product list must show product image preview
+
+Editing must update the correct product in JSON DB / Database
+
+────────────────────────
+
+3) CATEGORY SECTION
+Problems to fix:
+
+Categories are not saving
+
+Categories are not linked to products
+
+Requirements:
+
+Create Category
+
+Save in DB
+
+Categories appear in product add/edit dropdown
+
+Category should filter products
+
+Explanation:
+Category is used for grouping products (e.g., Shoes, Electronics).*
+
+────────────────────────
+
+4) ORDERS SECTION
+
+Fix all current issues.
+
+Requirements:
+
+Update order status from admin
+
+When updated → reflect everywhere:
+
+Admin → Order History
+
+User → Track Order page
+
+Delivery Agent Panel
+
+Status Options:
+
+Pending
+
+Processing
+
+Shipped
+
+Out for Delivery
+
+Delivered
+
+Cancelled
+
+After status change:
+
+✔ Email must go to user
+Example:
+"Your order #123 is now Out for Delivery"
+Include:
+
+Product name
+
+Qty
+
+Price
+
+Delivery agent name
+
+Delivery agent phone
+
+Tracking link
+
+In Order History → “View Details” must show:
+
+User name
+
+User email
+
+Delivery agent details
+
+Order Cancellation
+
+Fix cancellation issue
+
+User should be able to cancel order
+
+Admin panel must show cancellation
+
+Email notification for cancellation
+
+────────────────────────
+
+5) DELIVERY AGENT WORKFLOW
+After admin assigns a delivery agent:
+
+Delivery agent sees order in their panel
+
+Delivery agent changes status →
+reflects on:
+
+Admin dashboard
+
+Order History
+
+User Track Order page
+
+Delivery Agent Dashboard:
+
+Orders assigned
+
+Earnings
+
+Completed deliveries
+
+Profile edit (save to DB)
+
+────────────────────────
+
+6) COUPONS MODULE
+
+Fix all issues:
+
+Coupon price not showing
+
+Cannot edit coupons
+
+Coupon must apply at checkout
+
+Must show:
+
+Actual product price
+
+Discounted price
+
+Savings
+
+Example:
+Original price: ₹500
+Coupon: FLAT50
+Final: ₹450
+
+Coupons list must show:
+
+Code
+
+Discount amount/percentage
+
+Expiry date
+
+Min order value
+
+────────────────────────
+
+7) UI Navigation Fix
+
+Add Dashboard for:
+
+Customers
+
+Delivery Agents
+
+When clicking sidebar item →
+Open dashboard page
+Top menu with sub-navigation:
+Dashboard | List | Add New

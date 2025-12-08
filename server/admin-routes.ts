@@ -1106,6 +1106,54 @@ export function registerAdminRoutes(app: Express) {
     }
   });
 
+  app.post("/api/admin/customers", requireAdminAuth, async (req, res) => {
+    try {
+      const { name, email, phone, address, password } = req.body;
+      if (!name || !email || !password) {
+        return res.status(400).json({ message: "Name, email, and password are required" });
+      }
+      const customer = await AdminStorage.createUser({
+        name,
+        email,
+        phone: phone || null,
+        address: address || null,
+        password,
+      });
+      res.json(customer);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message || "Failed to create customer" });
+    }
+  });
+
+  app.put("/api/admin/customers/:id", requireAdminAuth, async (req, res) => {
+    try {
+      const { name, phone, address } = req.body;
+      const customer = await AdminStorage.updateUser(req.params.id, {
+        name,
+        phone,
+        address,
+      });
+      if (!customer) {
+        return res.status(404).json({ message: "Customer not found" });
+      }
+      res.json(customer);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message || "Failed to update customer" });
+    }
+  });
+
+  app.delete("/api/admin/customers/:id", requireAdminAuth, async (req, res) => {
+    try {
+      const success = await AdminStorage.deleteUser(req.params.id);
+      if (!success) {
+        return res.status(404).json({ message: "Customer not found" });
+      }
+      res.json({ success: true });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message || "Failed to delete customer" });
+    }
+  });
+
   // =====================
   // INQUIRIES MANAGEMENT
   // =====================

@@ -341,6 +341,8 @@ function ProductForm({
   const [images, setImages] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>(product?.images || (product?.imageUrl ? [product.imageUrl] : []));
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newSpecKey, setNewSpecKey] = useState("");
+  const [newSpecValue, setNewSpecValue] = useState("");
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {

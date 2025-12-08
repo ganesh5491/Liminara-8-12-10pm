@@ -219,6 +219,8 @@ function initializeDefaultRoles() {
           manageAdmins: true,
           manageDelivery: true,
           manageRoles: true,
+          coupons: true,
+          customers: true,
         },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -240,6 +242,77 @@ function initializeDefaultRoles() {
           manageAdmins: false,
           manageDelivery: true,
           manageRoles: false,
+          coupons: true,
+          customers: true,
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: "3",
+        name: "sales",
+        displayName: "Sales",
+        permissions: {
+          products: true,
+          orders: true,
+          users: false,
+          inquiries: true,
+          reviews: true,
+          questions: true,
+          settings: false,
+          salesDashboard: true,
+          deliveryDashboard: false,
+          manageAdmins: false,
+          manageDelivery: false,
+          manageRoles: false,
+          coupons: true,
+          customers: true,
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: "4",
+        name: "delivery",
+        displayName: "Delivery",
+        permissions: {
+          products: false,
+          orders: true,
+          users: false,
+          inquiries: false,
+          reviews: false,
+          questions: false,
+          settings: false,
+          salesDashboard: false,
+          deliveryDashboard: true,
+          manageAdmins: false,
+          manageDelivery: false,
+          manageRoles: false,
+          coupons: false,
+          customers: false,
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: "5",
+        name: "user",
+        displayName: "User",
+        permissions: {
+          products: false,
+          orders: false,
+          users: false,
+          inquiries: false,
+          reviews: false,
+          questions: false,
+          settings: false,
+          salesDashboard: false,
+          deliveryDashboard: false,
+          manageAdmins: false,
+          manageDelivery: false,
+          manageRoles: false,
+          coupons: false,
+          customers: false,
         },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -1152,6 +1225,84 @@ export async function getUserWithStats(id: string) {
     totalSpent,
     orders: userOrders,
   };
+}
+
+export async function createUser(data: {
+  name: string;
+  email: string;
+  phone?: string | null;
+  address?: string | null;
+  password: string;
+}): Promise<User> {
+  const bcrypt = await import("bcrypt");
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+
+  if (isJSONStorage) {
+    loadAllJsonData();
+    const id = crypto.randomUUID();
+    const newUser: User = {
+      id,
+      email: data.email,
+      name: data.name,
+      phone: data.phone || null,
+      address: data.address || null,
+      password: hashedPassword,
+      role: "customer",
+      profileImageUrl: null,
+      emailVerified: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    jsonUsers.set(id, newUser);
+    return newUser;
+  }
+
+  const result = await db.insert(users).values({
+    email: data.email,
+    name: data.name,
+    phone: data.phone || null,
+    address: data.address || null,
+    password: hashedPassword,
+    role: "customer",
+  }).returning();
+
+  return result[0];
+}
+
+export async function updateUser(id: string, data: {
+  name?: string;
+  phone?: string | null;
+  address?: string | null;
+}): Promise<User | undefined> {
+  if (isJSONStorage) {
+    loadAllJsonData();
+    const user = jsonUsers.get(id);
+    if (!user) return undefined;
+    const updated = {
+      ...user,
+      ...data,
+      updatedAt: new Date(),
+    };
+    jsonUsers.set(id, updated);
+    return updated;
+  }
+
+  const result = await db.update(users)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(users.id, id))
+    .returning();
+
+  return result[0];
+}
+
+export async function deleteUser(id: string): Promise<boolean> {
+  if (isJSONStorage) {
+    loadAllJsonData();
+    return jsonUsers.delete(id);
+  }
+
+  const result = await db.delete(users).where(eq(users.id, id)).returning();
+  return result.length > 0;
 }
 
 // =====================

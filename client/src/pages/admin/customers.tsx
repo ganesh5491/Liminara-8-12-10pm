@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,7 +14,10 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Search, Eye, Loader2, Mail, Phone, MapPin, ShoppingBag, Users, TrendingUp, DollarSign } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Search, Eye, Loader2, Mail, Phone, MapPin, ShoppingBag, Users, TrendingUp, DollarSign, Plus, Pencil, Trash2 } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -41,7 +45,10 @@ export default function CustomersManagement() {
   const [search, setSearch] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [activeTab, setActiveTab] = useState("list");
+  const { toast } = useToast();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -49,6 +56,28 @@ export default function CustomersManagement() {
   const { data: customers, isLoading } = useQuery<Customer[]>({
     queryKey: ["/api/admin/customers"],
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      return apiRequest("DELETE", `/api/admin/customers/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/customers"] });
+      toast({ title: "Customer deleted", description: "The customer has been removed" });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete customer",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleCloseDialog = () => {
+    setIsAddOpen(false);
+    setEditingCustomer(null);
+  };
 
   const formatCurrency = (amount: string | number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -85,6 +114,10 @@ export default function CustomersManagement() {
           <h2 className="text-2xl font-bold tracking-tight">Customers</h2>
           <p className="text-muted-foreground">View and manage customer accounts</p>
         </div>
+        <Button onClick={() => setIsAddOpen(true)} data-testid="button-add-customer">
+          <Plus className="mr-2 h-4 w-4" />
+          Add Customer
+        </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -399,6 +432,162 @@ export default function CustomersManagement() {
           )}
         </DialogContent>
       </Dialog>
+
+      <Dialog open={isAddOpen} onOpenChange={handleCloseDialog}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{editingCustomer ? "Edit Customer" : "Add New Customer"}</DialogTitle>
+            <DialogDescription>
+              {editingCustomer ? "Update customer information" : "Enter customer details to create a new account"}
+            </DialogDescription>
+          </DialogHeader>
+          <CustomerForm customer={editingCustomer} onClose={handleCloseDialog} />
+        </DialogContent>
+      </Dialog>
     </div>
+  );
+}
+
+function CustomerForm({
+  customer,
+  onClose,
+}: {
+  customer: Customer | null;
+  onClose: () => void;
+}) {
+  const [formData, setFormData] = useState({
+    name: customer?.name || "",
+    email: customer?.email || "",
+    phone: customer?.phone || "",
+    address: customer?.address || "",
+    password: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!customer && !formData.password) {
+      toast({
+        title: "Error",
+        description: "Password is required for new customers",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const url = customer
+        ? `/api/admin/customers/${customer.id}`
+        : "/api/admin/customers";
+      const method = customer ? "PUT" : "POST";
+
+      const submitData: any = { ...formData };
+      if (customer && !submitData.password) {
+        delete submitData.password;
+      }
+
+      await apiRequest(method, url, submitData);
+
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/customers"] });
+      toast({
+        title: customer ? "Customer updated" : "Customer created",
+        description: `Customer has been ${customer ? "updated" : "created"} successfully`,
+      });
+      onClose();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || `Failed to ${customer ? "update" : "create"} customer`,
+        variant: "destructive",
+      });
+    }
+
+    setIsSubmitting(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="name">Full Name *</Label>
+          <Input
+            id="name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+            data-testid="input-customer-name"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="phone">Phone Number</Label>
+          <Input
+            id="phone"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            data-testid="input-customer-phone"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="email">Email *</Label>
+        <Input
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+          disabled={!!customer}
+          data-testid="input-customer-email"
+        />
+      </div>
+
+      {!customer && (
+        <div className="space-y-2">
+          <Label htmlFor="password">Password *</Label>
+          <Input
+            id="password"
+            type="password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            required={!customer}
+            data-testid="input-customer-password"
+          />
+        </div>
+      )}
+
+      <div className="space-y-2">
+        <Label htmlFor="address">Address</Label>
+        <Textarea
+          id="address"
+          value={formData.address}
+          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+          placeholder="Enter full address"
+          rows={3}
+          data-testid="input-customer-address"
+        />
+      </div>
+
+      <div className="flex justify-end gap-2 pt-4">
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting} data-testid="button-submit-customer">
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            customer ? "Update Customer" : "Create Customer"
+          )}
+        </Button>
+      </div>
+    </form>
   );
 }
