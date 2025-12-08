@@ -1,0 +1,313 @@
+/* Previous version - commented out, keeping for reference */
+/*
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+... (previous CSS variables and styles) ...
+*/
+
+/* New Liminara Brand Styles - Updated 2024 */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 25 30% 18%;
+
+    --card: 40 30% 96%;
+    --card-foreground: 25 30% 18%;
+
+    --popover: 40 33% 98%;
+    --popover-foreground: 25 30% 18%;
+
+    --primary: 10 40% 45%;
+    --primary-foreground: 40 33% 98%;
+
+    --secondary: 25 25% 90%;
+    --secondary-foreground: 25 30% 18%;
+
+    --muted: 30 20% 94%;
+    --muted-foreground: 25 15% 45%;
+
+    --accent: 350 30% 85%;
+    --accent-foreground: 25 30% 18%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 30 20% 88%;
+    --input: 30 20% 88%;
+    --ring: 10 40% 45%;
+
+    --radius: 0.5rem;
+
+    /* Custom Liminara tokens */
+    --champagne: 40 40% 94%;
+    --rose-gold: 10 45% 75%;
+    --blush: 350 40% 92%;
+    --espresso: 25 35% 20%;
+    --cream: 45 50% 96%;
+    --dusty-rose: 350 25% 70%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(40 40% 94%) 0%, hsl(350 40% 92%) 50%, hsl(30 35% 90%) 100%);
+    --gradient-rose: linear-gradient(135deg, hsl(350 40% 92%) 0%, hsl(10 45% 88%) 100%);
+    --gradient-champagne: linear-gradient(180deg, hsl(40 40% 96%) 0%, hsl(40 35% 92%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(350 35% 88%) 0%, hsl(10 40% 85%) 100%);
+    --gradient-button-hover: linear-gradient(135deg, hsl(350 40% 82%) 0%, hsl(10 45% 78%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(25 30% 18% / 0.08);
+    --shadow-elegant: 0 8px 40px -8px hsl(25 30% 18% / 0.12);
+    --shadow-glow: 0 0 60px hsl(350 40% 85% / 0.3);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 25 25% 8%;
+    --foreground: 40 30% 95%;
+
+    --card: 25 25% 12%;
+    --card-foreground: 40 30% 95%;
+
+    --popover: 25 25% 8%;
+    --popover-foreground: 40 30% 95%;
+
+    --primary: 10 45% 65%;
+    --primary-foreground: 25 25% 8%;
+
+    --secondary: 25 20% 18%;
+    --secondary-foreground: 40 30% 95%;
+
+    --muted: 25 20% 15%;
+    --muted-foreground: 30 15% 60%;
+
+    --accent: 350 25% 25%;
+    --accent-foreground: 40 30% 95%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 25 20% 20%;
+    --input: 25 20% 20%;
+    --ring: 10 45% 65%;
+
+    --champagne: 40 20% 15%;
+    --rose-gold: 10 30% 35%;
+    --blush: 350 20% 18%;
+    --espresso: 40 30% 90%;
+    --cream: 40 20% 12%;
+    --dusty-rose: 350 20% 45%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+/* @layer base {
+  html {
+    zoom: .85;
+  }
+} */
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+@layer components {
+  .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-sans {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--espresso)) 0%, hsl(var(--primary)) 100%);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md border;
+    background: hsl(var(--background) / 0.7);
+    border-color: hsl(var(--border) / 0.5);
+  }
+
+  .hover-lift {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Text Reveal Animation */
+.hero-fade {
+  opacity: 0;
+  animation: fadeUp 1.3s ease-out forwards;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0px); }
+}
+
+/* Slider dots */
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.3);
+  transition: 300ms;
+}
+.dot.active {
+  width: 26px;
+  background-color: black;
+}
+
+/* Arrow Buttons */
+.hero-arrow {
+  @apply absolute top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-md shadow-lg
+         w-12 h-12 rounded-full flex items-center justify-center z-30 cursor-pointer
+         border hover:bg-white transition-all duration-300;
+}
+.hero-arrow.left  { left: 35px; }
+.hero-arrow.right { right: 35px; }
+.icon { width: 26px; height: 26px; color:#333; transition:.3s; }
+.hero-arrow:hover .icon { transform: scale(1.18); }

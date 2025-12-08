@@ -1,0 +1,9 @@
+# Node.js Backend
+
+node_modules/
+.env
+*.log
+.DS_Store
+storage/logs/*.log
+storage/uploads/*
+!storage/uploads/.gitkeep

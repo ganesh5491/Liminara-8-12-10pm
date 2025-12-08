@@ -1,0 +1,30 @@
+[
+  {
+    "id": "5356bf07-e423-4eae-a127-82e302d74910",
+    "productId": "cos-002",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "userName": "gaesg",
+    "question": "hjvdjknfb dm;",
+    "userEmail": null,
+    "answer": "jkml",
+    "answeredBy": null,
+    "answeredAt": "2025-11-29T11:49:34.299Z",
+    "isPublic": true,
+    "createdAt": "2025-11-28T18:47:55.351Z",
+    "updatedAt": "2025-11-29T11:49:34.299Z"
+  },
+  {
+    "id": "64081a6f-ce66-4423-9eb1-670d311f9c77",
+    "productId": "cos-001",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "userName": "ganesh",
+    "question": "how it was",
+    "userEmail": null,
+    "answer": "nice product",
+    "answeredBy": null,
+    "answeredAt": "2025-11-28T19:06:54.619Z",
+    "isPublic": true,
+    "createdAt": "2025-11-28T19:06:38.083Z",
+    "updatedAt": "2025-11-28T19:06:54.619Z"
+  }
+]

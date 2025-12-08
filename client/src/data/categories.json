@@ -1,0 +1,38 @@
+[
+    {
+        "id": "cat-001",
+        "name": "Serums",
+        "description": "Clinical-grade serums for targeted skin concerns",
+        "icon": "Sparkles"
+    },
+    {
+        "id": "cat-002",
+        "name": "Moisturizers",
+        "description": "Hydrating creams and lotions for all skin types",
+        "icon": "Droplets"
+    },
+    {
+        "id": "cat-003",
+        "name": "Eye Care",
+        "description": "Specialized treatments for delicate eye area",
+        "icon": "Sparkles"
+    },
+    {
+        "id": "cat-004",
+        "name": "Sun Protection",
+        "description": "Daily SPF and sunscreen solutions",
+        "icon": "ShieldCheck"
+    },
+    {
+        "id": "cat-005",
+        "name": "Treatments",
+        "description": "Advanced skincare treatments and actives",
+        "icon": "FlaskConical"
+    },
+    {
+        "id": "cat-006",
+        "name": "Natural & Organic",
+        "description": "Botanical and organic skincare",
+        "icon": "Leaf"
+    }
+]

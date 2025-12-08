@@ -1,0 +1,38 @@
+[
+  {
+    "id": "f4450662-0bce-4dd7-962e-a195dd7c11fb",
+    "productId": "cos-002",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "userName": "GANESH",
+    "rating": 4,
+    "comment": "NICE",
+    "images": [],
+    "isVerified": false,
+    "createdAt": "2025-11-28T18:48:22.500Z",
+    "updatedAt": "2025-11-28T18:48:22.500Z"
+  },
+  {
+    "id": "e5c23ec0-009f-4045-80b2-75912ac5472a",
+    "productId": "cos-001",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "userName": "GANESH",
+    "rating": 5,
+    "comment": "nice",
+    "images": [],
+    "isVerified": false,
+    "createdAt": "2025-11-28T19:07:25.619Z",
+    "updatedAt": "2025-11-28T19:07:25.619Z"
+  },
+  {
+    "id": "1c9f3dc7-7f06-41e1-b9fb-093d14907d72",
+    "productId": "cos-003",
+    "userId": "ea48ab63-d3c3-4a31-99a7-0047ee1ab9d5",
+    "userName": "Ganesh",
+    "rating": 5,
+    "comment": "nice",
+    "images": [],
+    "isVerified": false,
+    "createdAt": "2025-12-01T15:51:18.542Z",
+    "updatedAt": "2025-12-01T15:51:18.542Z"
+  }
+]

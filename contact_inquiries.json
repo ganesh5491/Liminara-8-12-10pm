@@ -1,0 +1,14 @@
+[
+  {
+    "id": "e9309488-16fe-46d6-8613-363c40a41a63",
+    "firstName": "Ganesh",
+    "lastName": "Kale",
+    "email": "ganeshkale030303@gmail.com",
+    "phone": "09028441589",
+    "inquiryType": "routine",
+    "message": "nice",
+    "status": "new",
+    "createdAt": "2025-12-06T16:31:24.131Z",
+    "submittedAt": "2025-12-06T16:31:24.138Z"
+  }
+]

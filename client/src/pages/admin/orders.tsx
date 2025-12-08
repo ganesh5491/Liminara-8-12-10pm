@@ -1,0 +1,515 @@
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { queryClient, apiRequest } from "@/lib/queryClient";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Search, Eye, Truck, Loader2, Package, MapPin, Phone, Mail } from "lucide-react";
+
+interface Order {
+  id: string;
+  orderNumber: string;
+  userId: string;
+  total: string;
+  status: string;
+  paymentStatus: string;
+  paymentMethod: string;
+  customerName: string;
+  customerPhone: string;
+  customerEmail: string;
+  shippingAddress: string;
+  city: string;
+  state: string;
+  pincode: string;
+  deliveryAgentId?: string;
+  deliveryStatus?: string;
+  createdAt: string;
+}
+
+interface DeliveryAgent {
+  id: string;
+  name: string;
+  phone: string;
+}
+
+const orderStatuses = [
+  "pending",
+  "confirmed",
+  "packed",
+  "shipped",
+  "out_for_delivery",
+  "delivered",
+  "cancelled",
+];
+
+const deliveryStatuses = [
+  "assigned",
+  "picked_up",
+  "in_transit",
+  "out_for_delivery",
+  "delivered",
+  "failed",
+];
+
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+export default function OrdersManagement() {
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isAssignOpen, setIsAssignOpen] = useState(false);
+  const { toast } = useToast();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const { data: orders, isLoading } = useQuery<Order[]>({
+    queryKey: ["/api/admin/orders", { status: statusFilter !== "all" ? statusFilter : undefined, search }],
+  });
+
+  const { data: deliveryAgents } = useQuery<DeliveryAgent[]>({
+    queryKey: ["/api/admin/delivery-agents/available"],
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, status, notes }: { id: string; status: string; notes?: string }) => {
+      return apiRequest("PUT", `/api/admin/orders/${id}/status`, { status, notes });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      toast({ title: "Order updated", description: "Order status has been changed" });
+    },
+  });
+
+  const assignDeliveryMutation = useMutation({
+    mutationFn: async ({ orderId, deliveryAgentId }: { orderId: string; deliveryAgentId: string }) => {
+      return apiRequest("PUT", `/api/admin/orders/${orderId}/assign-delivery`, { deliveryAgentId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      toast({ title: "Delivery assigned", description: "Delivery agent has been assigned to the order" });
+      setIsAssignOpen(false);
+    },
+  });
+
+  const formatCurrency = (amount: string | number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(typeof amount === "string" ? parseFloat(amount) : amount);
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "delivered":
+        return "bg-green-100 text-green-800";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "confirmed":
+      case "processing":
+        return "bg-blue-100 text-blue-800";
+      case "shipped":
+      case "packed":
+        return "bg-purple-100 text-purple-800";
+      case "out_for_delivery":
+        return "bg-indigo-100 text-indigo-800";
+      case "cancelled":
+      case "failed":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const filteredOrders = orders?.filter((order) => {
+    if (search) {
+      const searchLower = search.toLowerCase();
+      return (
+        order.orderNumber?.toLowerCase().includes(searchLower) ||
+        order.customerName?.toLowerCase().includes(searchLower) ||
+        order.customerEmail?.toLowerCase().includes(searchLower) ||
+        order.id?.toLowerCase().includes(searchLower)
+      );
+    }
+    return true;
+  });
+
+  const totalPages = Math.ceil((filteredOrders?.length || 0) / itemsPerPage);
+  const paginatedOrders = filteredOrders?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Orders</h2>
+          <p className="text-muted-foreground">Manage and track customer orders</p>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search orders by ID, customer name, or email..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9"
+                data-testid="input-search-orders"
+              />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[180px]" data-testid="select-status-filter">
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                {orderStatuses.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Order</th>
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Customer</th>
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Total</th>
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Payment</th>
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Status</th>
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Delivery</th>
+                    <th className="text-left py-3 px-2 text-sm font-medium text-muted-foreground">Date</th>
+                    <th className="text-right py-3 px-2 text-sm font-medium text-muted-foreground">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredOrders?.map((order) => (
+                    <tr key={order.id} className="border-b last:border-0" data-testid={`row-order-${order.id}`}>
+                      <td className="py-3 px-2">
+                        <p className="font-mono text-sm">{order.orderNumber || order.id.slice(0, 8)}</p>
+                      </td>
+                      <td className="py-3 px-2">
+                        <p className="text-sm font-medium">{order.customerName}</p>
+                        <p className="text-xs text-muted-foreground">{order.customerEmail}</p>
+                      </td>
+                      <td className="py-3 px-2 text-sm font-medium">
+                        {formatCurrency(order.total)}
+                      </td>
+                      <td className="py-3 px-2">
+                        <Badge variant="outline" className="text-xs">
+                          {order.paymentStatus}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-2">
+                        <Badge className={getStatusColor(order.status)}>
+                          {order.status?.replace(/_/g, " ")}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-2">
+                        {order.deliveryAgentId ? (
+                          <Badge variant="outline" className="text-xs">
+                            {order.deliveryStatus || "assigned"}
+                          </Badge>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">Not assigned</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-2 text-sm text-muted-foreground">
+                        {new Date(order.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="py-3 px-2">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              setSelectedOrder(order);
+                              setIsDetailOpen(true);
+                            }}
+                            data-testid={`button-view-${order.id}`}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          {!order.deliveryAgentId && order.status !== "cancelled" && order.status !== "delivered" && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => {
+                                setSelectedOrder(order);
+                                setIsAssignOpen(true);
+                              }}
+                              data-testid={`button-assign-${order.id}`}
+                            >
+                              <Truck className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {(!filteredOrders || filteredOrders.length === 0) && (
+                    <tr>
+                      <td colSpan={8} className="py-12 text-center text-muted-foreground">
+                        No orders found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Order Details</DialogTitle>
+            <DialogDescription>
+              Order #{selectedOrder?.orderNumber || selectedOrder?.id.slice(0, 8)}
+            </DialogDescription>
+          </DialogHeader>
+          {selectedOrder && (
+            <OrderDetails
+              order={selectedOrder}
+              onStatusChange={(status, notes) => {
+                updateStatusMutation.mutate({ id: selectedOrder.id, status, notes });
+              }}
+              isUpdating={updateStatusMutation.isPending}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isAssignOpen} onOpenChange={setIsAssignOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Assign Delivery Agent</DialogTitle>
+            <DialogDescription>
+              Select a delivery agent for order #{selectedOrder?.orderNumber || selectedOrder?.id.slice(0, 8)}
+            </DialogDescription>
+          </DialogHeader>
+          <AssignDeliveryForm
+            order={selectedOrder}
+            agents={deliveryAgents || []}
+            onAssign={(agentId) => {
+              if (selectedOrder) {
+                assignDeliveryMutation.mutate({ orderId: selectedOrder.id, deliveryAgentId: agentId });
+              }
+            }}
+            isAssigning={assignDeliveryMutation.isPending}
+          />
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function OrderDetails({
+  order,
+  onStatusChange,
+  isUpdating,
+}: {
+  order: Order;
+  onStatusChange: (status: string, notes?: string) => void;
+  isUpdating: boolean;
+}) {
+  const [newStatus, setNewStatus] = useState(order.status);
+  const [notes, setNotes] = useState("");
+
+  const formatCurrency = (amount: string | number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(typeof amount === "string" ? parseFloat(amount) : amount);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-4">
+          <div>
+            <h4 className="text-sm font-medium text-muted-foreground mb-2">Customer Information</h4>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Package className="h-4 w-4 text-muted-foreground" />
+                <span>{order.customerName}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-muted-foreground" />
+                <span>{order.customerPhone}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-muted-foreground" />
+                <span>{order.customerEmail}</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium text-muted-foreground mb-2">Shipping Address</h4>
+            <div className="flex items-start gap-2">
+              <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+              <div className="text-sm">
+                <p>{order.shippingAddress}</p>
+                <p>{order.city}, {order.state} - {order.pincode}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <h4 className="text-sm font-medium text-muted-foreground mb-2">Order Summary</h4>
+            <div className="space-y-1">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Total</span>
+                <span className="font-medium">{formatCurrency(order.total)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Payment Method</span>
+                <span>{order.paymentMethod || "N/A"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Payment Status</span>
+                <Badge variant="outline">{order.paymentStatus}</Badge>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t pt-4">
+        <h4 className="text-sm font-medium mb-4">Update Order Status</h4>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label>New Status</Label>
+            <Select value={newStatus} onValueChange={setNewStatus}>
+              <SelectTrigger data-testid="select-new-status">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {orderStatuses.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label>Notes (Optional)</Label>
+            <Textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Add any notes about this status change..."
+              data-testid="input-status-notes"
+            />
+          </div>
+          <Button
+            onClick={() => onStatusChange(newStatus, notes)}
+            disabled={isUpdating || newStatus === order.status}
+            className="bg-gradient-to-r from-pink-500 to-purple-500"
+            data-testid="button-update-status"
+          >
+            {isUpdating ? (
+              <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Updating...</>
+            ) : (
+              "Update Status"
+            )}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AssignDeliveryForm({
+  order,
+  agents,
+  onAssign,
+  isAssigning,
+}: {
+  order: Order | null;
+  agents: DeliveryAgent[];
+  onAssign: (agentId: string) => void;
+  isAssigning: boolean;
+}) {
+  const [selectedAgent, setSelectedAgent] = useState("");
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <Label>Select Delivery Agent</Label>
+        <Select value={selectedAgent} onValueChange={setSelectedAgent}>
+          <SelectTrigger data-testid="select-delivery-agent">
+            <SelectValue placeholder="Choose an agent" />
+          </SelectTrigger>
+          <SelectContent>
+            {agents.map((agent) => (
+              <SelectItem key={agent.id} value={agent.id}>
+                {agent.name} ({agent.phone})
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      {agents.length === 0 && (
+        <p className="text-sm text-muted-foreground">No delivery agents available</p>
+      )}
+      <Button
+        onClick={() => onAssign(selectedAgent)}
+        disabled={!selectedAgent || isAssigning}
+        className="w-full bg-gradient-to-r from-pink-500 to-purple-500"
+        data-testid="button-confirm-assign"
+      >
+        {isAssigning ? (
+          <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Assigning...</>
+        ) : (
+          "Assign Agent"
+        )}
+      </Button>
+    </div>
+  );
+}

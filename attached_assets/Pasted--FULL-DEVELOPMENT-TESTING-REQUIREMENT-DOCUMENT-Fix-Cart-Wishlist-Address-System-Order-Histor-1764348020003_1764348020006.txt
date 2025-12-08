@@ -1,0 +1,193 @@
+🚀 FULL DEVELOPMENT + TESTING REQUIREMENT DOCUMENT
+(Fix Cart, Wishlist, Address System, Order History + Implement Manual QA Test Cases)
+🔥 PART A — FEATURES / FIXES REQUIRED
+1. Quick Actions Buttons Not Working
+
+Fix and enable navigation for:
+
+View Wishlist
+
+View Cart
+
+View Order History
+
+Contact Support
+➡ Must navigate without page reload
+➡ Must work instantly on click
+
+2. Cart System Fix
+
+Current Bug → Items disappear / Not saving
+
+Required:
+
+Add to cart must save data persistently (LocalStorage / DB).
+
+Cart count updates immediately in UI.
+
+Checkout page must only open if cart has items.
+
+No manual page refresh required.
+
+3. Order History Module (New + Critical)
+
+After order placement → Save in DB and visible in profile.
+
+Order History Page must show:
+
+Field	Required
+Order ID	Yes
+Product Name	Yes
+Amount	Yes
+Status	Pending/Completed/Cancelled
+Order Date	Yes
+Track / Cancel button	Preferable
+
+Also add Filters:
+✔ All | ✔ Pending | ✔ Completed | ✔ Cancelled
+
+4. Address Management + Auto Fill in Checkout
+
+Current Issue → Address not loading; only one entry
+
+Required New Flow:
+
+If user has saved addresses → show them as selectable list:
+
+(o) Address #1
+(o) Address #2
+[ + Add New Address ]
+[ ✎ Edit ] [ 🗑 Delete ]
+
+
+If no address exists → Show blank form like now
+
+On Profile update → data must auto-fetch into checkout without manual refresh
+
+➡ User can store unlimited addresses
+➡ Add / Edit / Delete must work
+➡ Checkout form pre-fills automatically
+
+🔥 PRIORITY ORDER
+Priority	Task
+🔥 High	Cart persistence + Checkout working
+🔥 High	Order history backend + UI
+⚡ Medium	Multi-address + Auto fetch
+⚡ Medium	Quick Actions navigation
+
+🧪 PART B — MANUAL TESTING CHECKLIST (Must Pass)
+PRE-TEST
+
+✔ Open DevTools (F12 → Console)
+✔ Clear Cache + Cookies
+✔ Server running on http://localhost:5000
+
+Test 1 — Login WITHOUT Refresh
+
+Steps:
+
+Click Add to Cart/Buy Now
+
+Redirect → Login Page
+
+Enter OTP
+Expected:
+✔ Auto login
+✔ No page refresh required
+✔ User icon shows
+
+❌ Fail if refresh needed or redirect breaks
+
+Test 2 — Add to Cart
+
+Steps:
+
+Login
+
+Open Products Page
+
+Click Add to Cart
+Expected:
+✔ Toast "Added to cart"
+✔ Cart count updates instantly
+✔ No page reload
+
+❌ Fail if cart empty without refresh
+
+Test 3 — Buy Now
+
+Steps:
+
+Click Buy Now on product
+Expected:
+✔ Modal opens instantly
+✔ Autofilled customer data
+
+❌ Fail if needs multiple clicks
+
+Test 4 — Wishlist Add/Remove
+
+Expected:
+✔ Heart fills instantly
+✔ Toast alert
+
+❌ Fail if refresh required
+
+Test 5 — Navigation Flow
+
+Home → Products
+Products → Product Detail → Cart → Wishlist
+
+Expected:
+✔ Smooth navigation
+✔ State must persist
+
+Test 6 — Guest (Logged Out)
+
+Click Add to Cart
+Expected:
+✔ Redirect to login
+✔ After login → returns to action
+
+Test 7 — Stress Test
+
+Click Add to Cart rapidly 5x
+Expected:
+✔ Only ONE item added
+✔ No backend spam
+
+Test 8 — State Persistence After Login
+
+Click Buy Now → Login → Should come back to same product with modal open
+
+SUCCESS MATRIX
+
+| Test | Status | Notes |
+|---|---|
+| Login Flow | ⬜ | No refresh needed |
+| Add to Cart | ⬜ | Instant update |
+| Buy Now | ⬜ | Prefilled form |
+| Wishlist | ⬜ | Instant UI |
+| Navigation | ⬜ | No reload |
+| Guest Flow | ⬜ | Redirect works |
+| Stress Test | ⬜ | No duplicates |
+| State Persistence | ⬜ | Must maintain action |
+
+FAIL REPORT FORMAT
+
+Send screenshot with:
+📌 Page UI
+💻 Console logs visible
+⚠ Issue + expected behavior
+
+FINAL DELIVERABLE
+
+The system should allow:
+
+Action	Expected End Result
+Add to Cart	Persistent + No refresh
+Buy Now	Opens instantly + Prefilled
+Address Save	Autoload in checkout
+Multiple Address	Add / Edit / Delete
+Order History	Fetch + Status View
+Quick Actions	Fully working links

@@ -1,0 +1,38 @@
+/* Text Reveal Animation */
+.hero-fade {
+  opacity: 0;
+  animation: fadeUp 1.3s ease-out forwards;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0px); }
+}
+
+/* Slider dots */
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.3);
+  transition: 300ms;
+}
+.dot.active {
+  width: 26px;
+  background-color: black;
+}
+
+/* Arrow Buttons */
+.hero-arrow {
+  @apply absolute top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-md shadow-lg
+         w-12 h-12 rounded-full flex items-center justify-center z-30 cursor-pointer
+         border hover:bg-white transition-all duration-300;
+}
+.hero-arrow.left  { left: 35px; }
+.hero-arrow.right { right: 35px; }
+.icon { width: 26px; height: 26px; color:#333; transition:.3s; }
+.hero-arrow:hover .icon { transform: scale(1.18); }
+
+@layer base {
+  html {
+    zoom: .85;
+  }
+}

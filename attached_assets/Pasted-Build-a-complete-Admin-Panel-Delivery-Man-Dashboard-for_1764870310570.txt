@@ -1,0 +1,57 @@
+Build a complete Admin Panel + Delivery Man Dashboard for my eCommerce web application.
+My existing project GitHub: https://github.com/ganesh5491/Liminara4-12
+Frontend already exists.
+Backend partially created.
+User section exists.
+I need a full professional admin system + delivery man system.
+The admin portal  and delivery portal login URL will be:
+http://localhost:5000/admin
+
+http://localhost:5000/delivery
+
+After login → Admin Dashboard should be the first page.
+________________________________________
+✅ SYSTEM STRUCTURE
+You must build the following panels with complete flow:
+________________________________________
+1. Admin Authentication
+•	Admin login
+You must create a universal forgot password system for all users in the application.
+✔️ RULES:
+1. Email must be UNIQUE for every user
+•	Email field is unique in database
+•	No two accounts can use the same email
+________________________________________
+2. Login Page → "Forgot Password" link
+On login page, add:
+Forgot Password?
+When clicked:
+•	User enters email OR username
+•	Backend checks:
+✔️ Email/username exists
+❌ If not → show “Email not found in system”
+•	If exists → send reset password email
+________________________________________
+3. Email Sending Rules
+Admin Section Requirement
+•	When admin forgets password
+•	Email goes ONLY to:
+📧 ganeshkale030303@gmail.com
+For all other users
+•	Email goes to their own registered email
+Example:
+If delivery agent forgets password → email goes to delivery agent
+If customer forgets → email goes to customer
+If sales person forgets → email goes to sales person
+________________________________________
+4. Password Reset Flow
+When forgot password is triggered:
+1.	Verify email/username exists in DB
+2.	Generate a secure, random temporary password
+3.	Save temporary password (hashed) in DB
+4.	Email the temporary password to the user
+5.	User logs in with the temporary password
+6.	On FIRST login → force user to change password
+7.	After successful change → login normally
+________________________________________
+5. Reset Password (Inside User Settings)

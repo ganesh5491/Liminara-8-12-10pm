@@ -1,0 +1,62 @@
+-- Liminara Cosmetics Database Seed Data
+-- Insert initial data for categories, subcategories, and products
+
+-- Clear existing data (optional - uncomment if needed)
+-- DELETE FROM order_items;
+-- DELETE FROM orders;
+-- DELETE FROM cart_items;
+-- DELETE FROM wishlist_items;
+-- DELETE FROM product_reviews;
+-- DELETE FROM product_questions;
+-- DELETE FROM products;
+-- DELETE FROM subcategories;
+-- DELETE FROM categories;
+
+-- Insert Categories
+INSERT INTO categories (id, name, description, created_at) VALUES
+('b56dcb31-c32c-4cb5-967c-32e7b98f826f', 'Serums', 'Clinical-grade serums for targeted skin concerns', '2025-09-15 11:58:27'),
+('9b581346-3ce6-49ee-a22e-928ab207ca13', 'Moisturizers', 'Hydrating creams and lotions for all skin types', '2025-09-15 11:58:27'),
+('4eae8c7c-04c2-4826-a63f-ec517272718d', 'Eye Care', 'Specialized treatments for delicate eye area', '2025-09-15 11:58:27'),
+('91544339-bd53-497e-89e8-2d5de7b7c55e', 'Sun Protection', 'Daily SPF and sunscreen solutions', '2025-09-15 11:58:27'),
+('8da66a57-0413-48e9-a998-65d9d327161c', 'Treatments', 'Advanced skincare treatments and actives', '2025-09-15 11:58:27'),
+('4e0e6652-44e4-4f4f-ada2-86134d527bb6', 'Gift Sets', 'Curated skincare collections and bundles', '2025-09-15 11:58:27');
+
+-- Insert Subcategories
+INSERT INTO subcategories (id, name, category_id, description, image_url, created_at) VALUES
+('3bf07c8c-3016-4377-9caa-2bcdbf4e36d6', 'Brightening Serums', 'b56dcb31-c32c-4cb5-967c-32e7b98f826f', 'Vitamin C and brightening formulations', '/images/c3.jpg', '2025-09-15 11:58:27'),
+('cbd04275-dcb3-4f86-b982-f94e2f6aeeae', 'Hydrating Serums', 'b56dcb31-c32c-4cb5-967c-32e7b98f826f', 'Hyaluronic acid and moisture-boosting serums', '/images/c1.jpg', '2025-09-15 11:58:27'),
+('4f9f54f8-4053-41ef-81e1-eaf38fcc0128', 'Day Creams', '9b581346-3ce6-49ee-a22e-928ab207ca13', 'Lightweight moisturizers for daytime', '/images/c2.jpg', '2025-09-15 11:58:27'),
+('be0d5633-74ac-40d7-aac2-1bd0d31fb6ab', 'Night Creams', '9b581346-3ce6-49ee-a22e-928ab207ca13', 'Rich overnight treatments', '/images/c2.jpg', '2025-09-15 11:58:27'),
+('1f2aa35f-9507-4ecf-b7c7-e24fe4fe3307', 'Facial Oils', '9b581346-3ce6-49ee-a22e-928ab207ca13', 'Nourishing botanical oils', '/images/c6.jpg', '2025-09-15 11:58:27'),
+('423a81c3-c1a6-4be8-88e8-60e932cb8bba', 'Anti-Aging Eye', '4eae8c7c-04c2-4826-a63f-ec517272718d', 'Peptide-rich eye treatments', '/images/c4.jpg', '2025-09-15 11:58:27'),
+('51a2267b-c25b-4801-b24d-f85b76d51998', 'Hydrating Eye', '4eae8c7c-04c2-4826-a63f-ec517272718d', 'Moisture-boosting eye care', '/images/c4.jpg', '2025-09-15 11:58:27'),
+('c5f79f1a-b845-4aa4-86f1-9bc82b5ea1ff', 'SPF Moisturizers', '91544339-bd53-497e-89e8-2d5de7b7c55e', 'Daily moisturizers with sun protection', '/images/c5.jpg', '2025-09-15 11:58:27'),
+('55ccb9d3-30a9-4ebd-9eb5-b7cb0e95df11', 'Sunscreens', '91544339-bd53-497e-89e8-2d5de7b7c55e', 'Dedicated sun protection products', '/images/c5.jpg', '2025-09-15 11:58:27'),
+('ce17a651-fdda-4712-a971-b4a0fc5a681c', 'Retinol Products', '8da66a57-0413-48e9-a998-65d9d327161c', 'Anti-aging retinol treatments', '/images/c7.jpg', '2025-09-15 11:58:27'),
+('24ee96d2-d7f4-4178-bdd7-71a9c4874002', 'Exfoliants', '8da66a57-0413-48e9-a998-65d9d327161c', 'AHA/BHA chemical exfoliators', '/images/c8.jpg', '2025-09-15 11:58:27'),
+('c7e5c04f-eec7-4b60-b7b4-2b0f3f2613f3', 'Face Masks', '8da66a57-0413-48e9-a998-65d9d327161c', 'Treatment masks and peels', '/images/c9.jpg', '2025-09-15 11:58:27'),
+('402e02fd-01bc-4f00-8787-6a667ed5f9b1', 'Complete Routines', '4e0e6652-44e4-4f4f-ada2-86134d527bb6', 'Full skincare regimen sets', '/images/c1.jpg', '2025-09-15 11:58:27'),
+('b169548c-136f-4192-a313-43f31467e091', 'Starter Kits', '4e0e6652-44e4-4f4f-ada2-86134d527bb6', 'Introduction to Liminara sets', '/images/c2.jpg', '2025-09-15 11:58:27'),
+('08b3eaa4-be81-4f7d-9731-519cf88c1740', 'Luxury Collections', '4e0e6652-44e4-4f4f-ada2-86134d527bb6', 'Premium gift collections', '/images/c3.jpg', '2025-09-15 11:58:27');
+
+-- Insert Products
+INSERT INTO products (id, name, description, price, original_price, category_id, subcategory_id, image_url, images, in_stock, stock, featured, is_deal, deal_price, deal_expiry, created_at, updated_at) VALUES
+('7b6523d2-c621-437c-880b-d25869ea9643', 'Cellular Revive Serum', 'Clinical-grade vitamin C + hyaluronic acid serum for brightening & hydration. Advanced formulation with 15% L-Ascorbic Acid and triple molecular weight hyaluronic acid for maximum penetration and results.', 2499.00, 3299.00, 'b56dcb31-c32c-4cb5-967c-32e7b98f826f', 'cbd04275-dcb3-4f86-b982-f94e2f6aeeae', '/images/c1.jpg', '["/images/c1.jpg"]', 1, 50, 1, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('70222550-be04-4709-b6f3-f54b32f8e623', 'Hydrating Facial Cream', 'Rich moisturizing cream with ceramides and peptides for all skin types. Contains 5 essential ceramides, niacinamide, and collagen-boosting peptides for barrier repair and anti-aging.', 1799.00, 2299.00, '9b581346-3ce6-49ee-a22e-928ab207ca13', '4f9f54f8-4053-41ef-81e1-eaf38fcc0128', '/images/c2.jpg', '["/images/c2.jpg"]', 1, 75, 1, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('429150f3-0408-4437-b283-253f4ca79465', 'Vitamin C Brightening Serum', 'Stable vitamin C formula to even skin tone and boost radiance. 20% ethyl ascorbic acid with ferulic acid and vitamin E for enhanced stability and brightening power.', 1999.00, 2599.00, 'b56dcb31-c32c-4cb5-967c-32e7b98f826f', '3bf07c8c-3016-4377-9caa-2bcdbf4e36d6', '/images/c3.jpg', '["/images/c3.jpg"]', 1, 60, 1, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('6f636077-aa45-48da-9ac8-8f5e59fcf960', 'Anti-Aging Eye Cream', 'Peptide-rich eye cream to reduce puffiness & fine lines. Advanced formula with 5 peptide complex, caffeine, and hyaluronic acid for comprehensive eye area care.', 1299.00, 1699.00, '4eae8c7c-04c2-4826-a63f-ec517272718d', '423a81c3-c1a6-4be8-88e8-60e932cb8bba', '/images/c4.jpg', '["/images/c4.jpg"]', 1, 85, 1, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('b9a383f3-295c-4609-a9dd-69776352c518', 'SPF Moisturizer', 'Daily SPF 50 moisturizer with antioxidants for everyday protection. Lightweight formula with broad-spectrum UVA/UVB protection, niacinamide, and green tea extract.', 899.00, 1199.00, '91544339-bd53-497e-89e8-2d5de7b7c55e', 'c5f79f1a-b845-4aa4-86f1-9bc82b5ea1ff', '/images/c5.jpg', '["/images/c5.jpg"]', 1, 100, 1, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('08200d6e-c5e7-431d-8f5d-403edf938e65', 'Nourishing Facial Oil', 'Botanical blend of rosehip, jojoba, and argan oils for deep nourishment. Rich in omega fatty acids and vitamins for radiant, supple skin.', 1599.00, 2099.00, '9b581346-3ce6-49ee-a22e-928ab207ca13', '1f2aa35f-9507-4ecf-b7c7-e24fe4fe3307', '/images/c6.jpg', '["/images/c6.jpg"]', 1, 45, 1, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('862ed023-01b3-46b8-984b-b46279ddb883', 'Retinol Night Treatment', 'Clinical 0.5% retinol serum for anti-aging and skin renewal. Time-released formula minimizes irritation while maximizing results.', 2199.00, 2899.00, '8da66a57-0413-48e9-a998-65d9d327161c', 'ce17a651-fdda-4712-a971-b4a0fc5a681c', '/images/c7.jpg', '["/images/c7.jpg"]', 1, 40, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('a5871390-b81b-434c-b8de-11c6ca21430c', 'AHA/BHA Exfoliating Toner', 'Gentle chemical exfoliant with 10% AHA and 2% BHA for smooth, clear skin. Refines texture, minimizes pores, and brightens complexion.', 1399.00, 1799.00, '8da66a57-0413-48e9-a998-65d9d327161c', '24ee96d2-d7f4-4178-bdd7-71a9c4874002', '/images/c8.jpg', '["/images/c8.jpg"]', 1, 65, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('cfe71c6c-4129-48a3-9ebd-1d6437fe87ac', 'Hydrating Sheet Mask Pack', 'Set of 5 intensive hydration sheet masks with hyaluronic acid and ceramides. Deep moisture infusion for instantly plump, glowing skin.', 999.00, 1499.00, '8da66a57-0413-48e9-a998-65d9d327161c', 'c7e5c04f-eec7-4b60-b7b4-2b0f3f2613f3', '/images/c9.jpg', '["/images/c9.jpg"]', 1, 80, 0, 1, 799.00, '2025-12-31 11:58:28', '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('78482536-1cfb-4c32-bb0b-eb0b3ed84344', 'Complete Anti-Aging Routine', 'Comprehensive 4-step anti-aging system: cleanser, serum, moisturizer, and eye cream. Everything you need for youthful, radiant skin.', 4999.00, 6999.00, '4e0e6652-44e4-4f4f-ada2-86134d527bb6', '402e02fd-01bc-4f00-8787-6a667ed5f9b1', '/images/c1.jpg', '["/images/c1.jpg", "/images/c2.jpg", "/images/c4.jpg"]', 1, 25, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('e517b387-73b3-47a4-be77-deed2162f917', 'Brightening Starter Kit', 'Introduction to Liminara brightening: vitamin C serum, day cream, and SPF. Perfect for first-time customers.', 3599.00, 4899.00, '4e0e6652-44e4-4f4f-ada2-86134d527bb6', 'b169548c-136f-4192-a313-43f31467e091', '/images/c3.jpg', '["/images/c3.jpg", "/images/c2.jpg", "/images/c5.jpg"]', 1, 35, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('10944d54-9873-479d-9697-fa0ba69ab7d2', 'Intensive Night Repair Cream', 'Rich overnight treatment with retinol, peptides, and botanical extracts. Wake up to visibly renewed, younger-looking skin.', 2299.00, 2999.00, '9b581346-3ce6-49ee-a22e-928ab207ca13', 'be0d5633-74ac-40d7-aac2-1bd0d31fb6ab', '/images/c2.jpg', '["/images/c2.jpg"]', 1, 55, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('0e76c553-cfa9-414d-9e14-7a1f2c89bb1a', 'Collagen Boost Serum', 'Advanced peptide serum to stimulate collagen production. 5 peptide complex with niacinamide for firmer, plumper skin.', 2599.00, 3299.00, 'b56dcb31-c32c-4cb5-967c-32e7b98f826f', 'cbd04275-dcb3-4f86-b982-f94e2f6aeeae', '/images/c1.jpg', '["/images/c1.jpg"]', 1, 42, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('0af67dae-bb55-434e-ad78-21348617eb31', 'Hydrating Eye Gel', 'Cooling gel formula with hyaluronic acid and cucumber extract. Instantly refreshes tired eyes and reduces puffiness.', 1099.00, 1499.00, '4eae8c7c-04c2-4826-a63f-ec517272718d', '51a2267b-c25b-4801-b24d-f85b76d51998', '/images/c4.jpg', '["/images/c4.jpg"]', 1, 70, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('ee7884c7-f1aa-4ed6-aa8f-cf8ffb0ec7f5', 'Mineral Sunscreen SPF 50+', 'Physical sunscreen with zinc oxide and titanium dioxide. Broad-spectrum protection with added antioxidants.', 1199.00, 1599.00, '91544339-bd53-497e-89e8-2d5de7b7c55e', '55ccb9d3-30a9-4ebd-9eb5-b7cb0e95df11', '/images/c5.jpg', '["/images/c5.jpg"]', 1, 90, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('bc5b696b-cd2a-43c3-a92b-7ef28f788878', 'Gentle Retinol Starter', 'Beginner-friendly 0.25% retinol serum. Build tolerance with this gentle yet effective anti-aging treatment.', 1699.00, 2199.00, '8da66a57-0413-48e9-a998-65d9d327161c', 'ce17a651-fdda-4712-a971-b4a0fc5a681c', '/images/c7.jpg', '["/images/c7.jpg"]', 1, 48, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('6a20eddc-e2cb-4e94-a7e5-43c8d6ac6297', 'Glycolic Acid Peel Pads', 'Pre-soaked treatment pads with 10% glycolic acid. Convenient daily exfoliation for smoother, brighter skin.', 1299.00, 1699.00, '8da66a57-0413-48e9-a998-65d9d327161c', '24ee96d2-d7f4-4178-bdd7-71a9c4874002', '/images/c8.jpg', '["/images/c8.jpg"]', 1, 52, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('b671127c-ac23-496a-b1f3-1b08cb7cf34d', 'Purifying Clay Mask', 'Deep cleansing mask with kaolin and bentonite clay. Detoxifies pores and absorbs excess oil for clear, matte skin.', 1099.00, 1499.00, '8da66a57-0413-48e9-a998-65d9d327161c', 'c7e5c04f-eec7-4b60-b7b4-2b0f3f2613f3', '/images/c9.jpg', '["/images/c9.jpg"]', 1, 58, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28'),
+('9803cb2b-801a-4d18-9c9d-d8e4b9cd957b', 'Luxury Skincare Collection', 'Premium gift set with 6 full-size products: serums, creams, treatments, and SPF. The ultimate Liminara experience.', 7999.00, 11999.00, '4e0e6652-44e4-4f4f-ada2-86134d527bb6', '08b3eaa4-be81-4f7d-9731-519cf88c1740', '/images/c1.jpg', '["/images/c1.jpg", "/images/c2.jpg", "/images/c3.jpg", "/images/c4.jpg", "/images/c5.jpg"]', 1, 15, 0, 0, NULL, NULL, '2025-09-15 11:58:28', '2025-09-15 11:58:28');

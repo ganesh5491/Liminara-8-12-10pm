@@ -1,0 +1,6 @@
+# Deny all direct access to storage directory
+# Files should only be served via /api/files endpoint
+# Apache 2.4 syntax for cPanel compatibility
+Require all denied
+# Fallback for Apache 2.2
+Deny from all

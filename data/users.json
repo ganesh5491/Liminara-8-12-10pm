@@ -1,0 +1,44 @@
+[
+  {
+    "id": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "email": "lifeinside109@gmail.com",
+    "name": "fyguhjkn,m",
+    "phone": "4865623626",
+    "address": "jknlm,.",
+    "firstName": "",
+    "lastName": "",
+    "profileImageUrl": "",
+    "provider": "otp",
+    "passwordHash": null,
+    "createdAt": "2025-11-27T17:48:07.859Z",
+    "updatedAt": "2025-11-27T17:48:07.859Z"
+  },
+  {
+    "id": "ea48ab63-d3c3-4a31-99a7-0047ee1ab9d5",
+    "email": "ganeshkale030303@gmail.com",
+    "name": "ganesh",
+    "firstName": "",
+    "lastName": "",
+    "profileImageUrl": "",
+    "provider": "otp",
+    "phone": "9028441589",
+    "address": "bhumkar chowk, pune",
+    "passwordHash": null,
+    "createdAt": "2025-11-29T11:52:28.099Z",
+    "updatedAt": "2025-12-01T12:45:03.343Z"
+  },
+  {
+    "id": "e819fd7d-926f-44de-a568-126f629a9fcd",
+    "email": "ganeshkale5491@gmail.com",
+    "name": "Ganesh Ravikant Kale",
+    "phone": "9028441589",
+    "address": " guruji chowk, purna road, nanded\n",
+    "firstName": "",
+    "lastName": "",
+    "profileImageUrl": "",
+    "provider": "otp",
+    "passwordHash": null,
+    "createdAt": "2025-11-29T11:56:54.476Z",
+    "updatedAt": "2025-11-29T11:56:54.476Z"
+  }
+]

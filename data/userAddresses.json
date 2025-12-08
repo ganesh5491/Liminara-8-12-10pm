@@ -1,0 +1,58 @@
+[
+  {
+    "id": "4ec2b155-958d-491e-9208-78a722a76650",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "name": "Ganesh",
+    "phone": "4865623626",
+    "email": "lifeinside109@gmail.com",
+    "address": "bhumkar chowk",
+    "city": "pune",
+    "state": "MH",
+    "pincode": "213111",
+    "isDefault": true,
+    "createdAt": "2025-11-28T18:42:15.754Z",
+    "updatedAt": "2025-11-28T18:42:15.754Z"
+  },
+  {
+    "id": "2ac463f4-6f34-4076-8388-43a458632413",
+    "userId": "ea48ab63-d3c3-4a31-99a7-0047ee1ab9d5",
+    "name": "ganesh",
+    "phone": "1231212312",
+    "email": "ganeshkale030303@gmail.com",
+    "address": "bhumkar chowk, pune",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "pincode": "411057",
+    "isDefault": false,
+    "createdAt": "2025-11-29T12:03:58.657Z",
+    "updatedAt": "2025-12-01T18:38:48.314Z"
+  },
+  {
+    "id": "e64094c4-1727-4fc0-b57c-7203186ca441",
+    "userId": "e819fd7d-926f-44de-a568-126f629a9fcd",
+    "name": "Ganesh Ravikant Kale",
+    "phone": "9028441589",
+    "email": "ganeshkale5491@gmail.com",
+    "address": " guruji chowk, purna road, nanded\n",
+    "city": "Nanded",
+    "state": "Maharashtra",
+    "pincode": "431605",
+    "isDefault": true,
+    "createdAt": "2025-12-01T15:07:57.353Z",
+    "updatedAt": "2025-12-01T15:07:57.353Z"
+  },
+  {
+    "id": "30c4b1d8-5a67-447e-b027-f1c30ef38b3c",
+    "userId": "ea48ab63-d3c3-4a31-99a7-0047ee1ab9d5",
+    "name": "ganesh",
+    "phone": "9028441589",
+    "email": "ganeshkale030303@gmail.com",
+    "address": "bhumkar chowk, pune",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "pincode": "411057",
+    "isDefault": true,
+    "createdAt": "2025-12-01T18:38:48.316Z",
+    "updatedAt": "2025-12-01T18:38:48.316Z"
+  }
+]

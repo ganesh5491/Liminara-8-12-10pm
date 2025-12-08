@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fetch POST Example</title>
+</head>
+<body>
+  <h2>Create Post</h2>
+
+  <form id="postForm">
+    <input type="text" id="title" placeholder="Title" required />
+    <input type="text" id="body" placeholder="Body" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <pre id="responseBox"></pre>
+
+  <script>
+    const form = document.getElementById("postForm");
+    const responseBox = document.getElementById("responseBox");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value;
+      const body = document.getElementById("body").value;
+
+      responseBox.textContent = "Sending...";
+
+      try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title, body, userId: 1 }),
+        });
+
+        const data = await res.json();
+        responseBox.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        responseBox.textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "77f38d9f-b0e7-4d2f-84de-aa4a905f5848",
+    "email": "admin@liminara.com",
+    "username": "admin",
+    "name": "Super Admin",
+    "firstName": "Super",
+    "lastName": "Admin",
+    "phone": null,
+    "profileImageUrl": null,
+    "passwordHash": "$2b$10$LNz3jqnSy0/erQXcdPE8oej5lQg4btltedlX6bQv6DkuYR1ILi7mK",
+    "roleId": "1",
+    "isActive": true,
+    "mustChangePassword": false,
+    "loginAttempts": 0,
+    "lockedUntil": null,
+    "lastLogin": "2025-12-08T16:16:22.867Z",
+    "createdAt": "2025-12-04T19:44:40.203Z",
+    "updatedAt": "2025-12-04T19:44:40.203Z"
+  },
+  {
+    "id": "a21027d2-0ccd-4ac0-89db-65620c2e33b3",
+    "email": "ganeshkale5491@gmail.com",
+    "name": "ganesh",
+    "firstName": "Ganesh",
+    "lastName": "kale",
+    "phone": "9028441589",
+    "profileImageUrl": null,
+    "username": "ganeshkale5491",
+    "passwordHash": "$2b$10$FETD3Fjw0PC7lqoQFqdq8.e7d2H2u7MosrHBqyzdYOWN02wMkCqmq",
+    "roleId": "2",
+    "isActive": true,
+    "mustChangePassword": false,
+    "loginAttempts": 0,
+    "lockedUntil": null,
+    "lastLogin": "2025-12-08T16:09:00.169Z",
+    "createdBy": null,
+    "createdAt": "2025-12-08T16:06:11.987Z",
+    "updatedAt": "2025-12-08T16:08:17.138Z"
+  }
+]

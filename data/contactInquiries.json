@@ -1,0 +1,35 @@
+[
+  {
+    "id": "21652fca-23cd-4ff8-bde6-439eaa8ae30a",
+    "firstName": "ganesh",
+    "lastName": "kale",
+    "email": "ganeshkale5491@gmail.com",
+    "phone": "90284441589",
+    "inquiryType": "routine",
+    "message": "nakdcx ",
+    "status": "new",
+    "createdAt": "2025-11-29T16:43:24.151Z"
+  },
+  {
+    "id": "b4911491-f378-4616-93e9-4f5c6e18c3b0",
+    "firstName": "ganesh",
+    "lastName": "kale",
+    "email": "ganeshkale5491@gmail.com",
+    "phone": "909012312",
+    "inquiryType": "ingredients",
+    "message": "its good",
+    "status": "new",
+    "createdAt": "2025-11-29T17:19:50.937Z"
+  },
+  {
+    "id": "e9309488-16fe-46d6-8613-363c40a41a63",
+    "firstName": "Ganesh",
+    "lastName": "Kale",
+    "email": "ganeshkale030303@gmail.com",
+    "phone": "09028441589",
+    "inquiryType": "routine",
+    "message": "nice",
+    "status": "new",
+    "createdAt": "2025-12-06T16:31:24.131Z"
+  }
+]

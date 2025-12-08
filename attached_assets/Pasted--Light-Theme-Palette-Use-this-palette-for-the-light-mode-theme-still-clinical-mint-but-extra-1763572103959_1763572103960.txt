@@ -1,0 +1,78 @@
+🎨 Light Theme Palette
+
+Use this palette for the “light mode” theme (still clinical & mint but extra bright and airy):
+
+Background main: #FAFEFD (very light mint-white)
+
+Surface/card: rgba(255,255,255,0.85) (frosted white)
+
+Mint accent: #B4EDE7 (lighter mint)
+
+Mint deep (for text/buttons): #0F7A72 (unchanged)
+
+Text primary: #0E2F2C (slightly softer than very dark)
+
+Text muted: #7A8C8A
+
+Accent line (thin band): #FFF8B8 (pale yellow)
+
+CTA background: linear-gradient(180deg, #B4EDE7, #0F7A72)
+
+Border/shadow: 0 8px 24px rgba(2,40,39,0.04)
+
+📄 CSS Variables Snippet (Light Theme)
+:root {
+  --ph-bg-light: #FAFEFD;
+  --ph-surface-light: rgba(255,255,255,0.85);
+  --ph-frost-blur-light: 8px;
+  --ph-mint-light-light: #B4EDE7;
+  --ph-mint-light: #B4EDE7;
+  --ph-mint-deep: #0F7A72;
+  --ph-text-light: #0E2F2C;
+  --ph-muted-light: #7A8C8A;
+  --ph-accent-light: #FFF8B8;
+  --ph-cta-bg-light: linear-gradient(180deg, #B4EDE7, #0F7A72);
+  --ph-cta-text-light: #ffffff;
+  --ph-radius-light: 10px;
+  --ph-shadow-light: 0 8px 24px rgba(2,40,39,0.04);
+}
+.theme-pharma‐mint‐light body {
+  background: var(--ph-bg-light);
+  color: var(--ph-text-light);
+}
+.theme-pharma‐mint‐light .card {
+  background: var(--ph-surface-light);
+  backdrop-filter: blur(var(--ph-frost-blur-light));
+  border-radius: var(--ph-radius-light);
+  box-shadow: var(--ph-shadow-light);
+  border: 1px solid rgba(10,60,58,0.02);
+}
+.theme-pharma‐mint‐light .btn-primary {
+  background: var(--ph-cta-bg-light);
+  color: var(--ph-cta-text-light);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+.theme-pharma‐mint‐light .accent-band {
+  height: 6px;
+  background: var(--ph-accent-light);
+  border-radius: 3px;
+  width: 100%;
+}
+
+📝 Developer Prompt (Light Theme Version)
+Objective: Create a “light mode” version of the Mint Clinical pharma theme (named theme-pharma-mint-light) and apply it site-wide.
+
+Tasks:
+1. Copy the CSS variable block above into a new file: src/styles/theme-pharma-mint-light.css.
+2. Extend ThemeContext / theme-switching logic to include a “light” option. When active, add class .theme-pharma-mint-light to <body>.
+3. Ensure all components (cards, buttons, sections) respect the new variables.
+4. On Home page, ensure section-wise background bands remain visible & readable with the light theme.
+5. Do a contrast check: all text (especially on colored backgrounds) must meet AA.
+6. Provide a toggle switch (Dark/Light) or link in admin/settings to select “Light” mode.
+7. Update README: how to enable light theme and how to edit variables for future tweaks.
+
+Deliverable:
+– A working light theme live on Replit.
+– Screenshot of Home page in light theme.
+– Confirmation all UI elements (hero, category tiles, featured products, trust bar, footer) render well with light colors.

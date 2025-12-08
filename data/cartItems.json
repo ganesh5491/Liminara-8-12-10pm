@@ -1,0 +1,30 @@
+[
+  {
+    "id": "fd812907-1a3f-4790-9532-15ca596695e4",
+    "userId": "e65dbcbe-945c-4f54-8985-00b240fb4f88",
+    "productId": "cos-001",
+    "quantity": 1,
+    "createdAt": "2025-11-27T16:18:03.840Z"
+  },
+  {
+    "id": "1dc47dfa-9594-4aee-89ba-e9c3fc08cb4a",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "productId": "cos-003",
+    "quantity": 4,
+    "createdAt": "2025-11-28T19:03:53.607Z"
+  },
+  {
+    "id": "1afb59fe-48a6-4a88-be8d-3e7d1fca8064",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "productId": "cos-001",
+    "quantity": 1,
+    "createdAt": "2025-11-29T13:55:14.225Z"
+  },
+  {
+    "id": "14b6b8f6-b1ba-4085-b623-7cdfffb12206",
+    "userId": "63815bfe-7c43-45a7-94d1-c5b7fccad201",
+    "productId": "cos-002",
+    "quantity": 2,
+    "createdAt": "2025-11-29T13:55:25.037Z"
+  }
+]

@@ -1,0 +1,146 @@
+[
+    {
+        "id": "cos-001",
+        "name": "Cellular Revive Serum",
+        "description": "Clinical-grade vitamin C + hyaluronic acid serum for brightening & hydration. Advanced formulation with 15% L-Ascorbic Acid and triple molecular weight hyaluronic acid for maximum penetration and results.",
+        "shortDescription": "Clinical-grade vitamin C + hyaluronic acid serum for brightening & hydration.",
+        "price": "2,499",
+        "originalPrice": "3,299",
+        "images": [
+            "/images/c1.jpg"
+        ],
+        "inStock": true,
+        "stock": 50,
+        "featured": true,
+        "category": "Serums",
+        "subcategory": "Hydrating Serums"
+    },
+    {
+        "id": "cos-002",
+        "name": "Hydrating Facial Cream",
+        "description": "Rich moisturizing cream with ceramides and peptides for all skin types. Contains 5 essential ceramides, niacinamide, and collagen-boosting peptides for barrier repair and anti-aging.",
+        "shortDescription": "Rich moisturizing cream with ceramides and peptides for all skin types.",
+        "price": "1,799",
+        "originalPrice": "2,299",
+        "images": [
+            "/images/c2.jpg"
+        ],
+        "inStock": true,
+        "stock": 75,
+        "featured": true,
+        "category": "Moisturizers",
+        "subcategory": "Day Creams"
+    },
+    {
+        "id": "cos-003",
+        "name": "Vitamin C Brightening Serum",
+        "description": "Stable vitamin C formula to even skin tone and boost radiance. 20% ethyl ascorbic acid with ferulic acid and vitamin E for enhanced stability and brightening power.",
+        "shortDescription": "Stable vitamin C formula to even skin tone and boost radiance.",
+        "price": "1,999",
+        "originalPrice": "2,599",
+        "images": [
+            "/images/c3.jpg"
+        ],
+        "inStock": true,
+        "stock": 60,
+        "featured": true,
+        "category": "Serums",
+        "subcategory": "Brightening Serums"
+    },
+    {
+        "id": "cos-004",
+        "name": "Anti-Aging Eye Cream",
+        "description": "Peptide-rich eye cream to reduce puffiness & fine lines. Advanced formula with 5 peptide complex, caffeine, and hyaluronic acid for comprehensive eye area care.",
+        "shortDescription": "Peptide-rich eye cream to reduce puffiness & fine lines.",
+        "price": "1,299",
+        "originalPrice": "1,699",
+        "images": [
+            "/images/c4.jpg"
+        ],
+        "inStock": true,
+        "stock": 85,
+        "featured": true,
+        "category": "Eye Care",
+        "subcategory": "Anti-Aging Eye"
+    },
+    {
+        "id": "cos-005",
+        "name": "SPF Moisturizer",
+        "description": "Daily SPF 50 moisturizer with antioxidants for everyday protection. Lightweight formula with broad-spectrum UVA/UVB protection, niacinamide, and green tea extract.",
+        "shortDescription": "Daily SPF 50 moisturizer with antioxidants for everyday protection.",
+        "price": "899",
+        "originalPrice": "1,199",
+        "images": [
+            "/images/c5.jpg"
+        ],
+        "inStock": true,
+        "stock": 100,
+        "featured": true,
+        "category": "Sun Protection",
+        "subcategory": "SPF Moisturizers"
+    },
+    {
+        "id": "cos-006",
+        "name": "Nourishing Facial Oil",
+        "description": "Botanical blend of rosehip, jojoba, and argan oils for deep nourishment. Rich in omega fatty acids and vitamins for radiant, supple skin.",
+        "shortDescription": "Botanical blend of rosehip, jojoba, and argan oils for deep nourishment.",
+        "price": "1,599",
+        "originalPrice": "2,099",
+        "images": [
+            "/images/c6.jpg"
+        ],
+        "inStock": true,
+        "stock": 45,
+        "featured": true,
+        "category": "Moisturizers",
+        "subcategory": "Facial Oils"
+    },
+    {
+        "id": "cos-007",
+        "name": "Retinol Night Treatment",
+        "description": "Clinical 0.5% retinol serum for anti-aging and skin renewal. Time-released formula minimizes irritation while maximizing results.",
+        "shortDescription": "Clinical 0.5% retinol serum for anti-aging and skin renewal.",
+        "price": "2,199",
+        "originalPrice": "2,899",
+        "images": [
+            "/images/c7.jpg"
+        ],
+        "inStock": true,
+        "stock": 40,
+        "featured": false,
+        "category": "Treatments",
+        "subcategory": "Retinol Products"
+    },
+    {
+        "id": "cos-008",
+        "name": "AHA/BHA Exfoliating Toner",
+        "description": "Gentle chemical exfoliant with 10% AHA and 2% BHA for smooth, clear skin. Refines texture, minimizes pores, and brightens complexion.",
+        "shortDescription": "Gentle chemical exfoliant with 10% AHA and 2% BHA for smooth, clear skin.",
+        "price": "1,399",
+        "originalPrice": "1,799",
+        "images": [
+            "/images/c8.jpg"
+        ],
+        "inStock": true,
+        "stock": 65,
+        "featured": false,
+        "category": "Treatments",
+        "subcategory": "Exfoliants"
+    },
+    {
+        "id": "cos-009",
+        "name": "Hydrating Sheet Mask Pack",
+        "description": "Set of 5 intensive hydration sheet masks with hyaluronic acid and ceramides. Deep moisture infusion for instantly plump, glowing skin.",
+        "shortDescription": "Set of 5 intensive hydration sheet masks with hyaluronic acid and ceramides.",
+        "price": "999",
+        "originalPrice": "1,499",
+        "images": [
+            "/images/c9.jpg"
+        ],
+        "inStock": true,
+        "stock": 80,
+        "featured": false,
+        "category": "Treatments",
+        "subcategory": "Face Masks"
+    }
+]
