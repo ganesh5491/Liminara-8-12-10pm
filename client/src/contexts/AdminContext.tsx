@@ -30,6 +30,8 @@ interface DeliveryAgent {
   rating?: string;
   earnings?: string;
   mustChangePassword?: boolean;
+  vehicleType?: string;
+  vehicleNumber?: string;
 }
 
 interface AdminContextType {
@@ -43,6 +45,7 @@ interface AdminContextType {
   logout: () => Promise<void>;
   deliveryLogout: () => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<boolean>;
+  changeDeliveryPassword: (currentPassword: string, newPassword: string) => Promise<boolean>;
   checkPermission: (permission: string) => boolean;
   refreshUser: () => Promise<void>;
 }
@@ -237,6 +240,41 @@ export function AdminProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const changeDeliveryPassword = async (currentPassword: string, newPassword: string) => {
+    try {
+      const response = await fetch("/api/delivery/auth/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        toast({
+          title: "Password Change Failed",
+          description: data.message || "Failed to change password",
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      await refreshDeliveryAgent();
+      toast({
+        title: "Password Changed",
+        description: "Your password has been updated successfully",
+      });
+      return true;
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while changing password",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
   const checkPermission = (permission: string) => {
     if (!adminUser) return false;
     return adminUser.permissions[permission] === true;
@@ -255,6 +293,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
         logout,
         deliveryLogout,
         changePassword,
+        changeDeliveryPassword,
         checkPermission,
         refreshUser,
       }}

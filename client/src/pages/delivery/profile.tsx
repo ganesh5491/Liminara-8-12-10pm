@@ -10,10 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, User, Phone, Truck, Star, Package } from "lucide-react";
-import { useDelivery } from "@/contexts/AdminContext";
+import { useAdmin } from "@/contexts/AdminContext";
 
 export default function DeliveryProfile() {
-  const { deliveryAgent } = useDelivery();
+  const { deliveryAgent } = useAdmin();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({

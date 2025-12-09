@@ -711,6 +711,8 @@ export async function createDeliveryAgent(agent: InsertDeliveryAgent): Promise<D
       cancelledDeliveries: 0,
       rating: "5.00",
       earnings: "0",
+      vehicleType: agent.vehicleType || null,
+      vehicleNumber: agent.vehicleNumber || null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -1081,6 +1083,16 @@ export async function assignDeliveryAgent(
 // DELIVERY OPERATIONS
 // =====================
 export async function getDeliveryAgentOrders(agentId: string, status?: string): Promise<Order[]> {
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    let ordersArr = Array.from(jsonOrders.values());
+    ordersArr = ordersArr.filter(o => o.deliveryAgentId === agentId);
+    if (status) {
+      ordersArr = ordersArr.filter(o => o.deliveryStatus === status);
+    }
+    return ordersArr.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
   const conditions = [eq(orders.deliveryAgentId, agentId)];
   if (status) {
     conditions.push(eq(orders.deliveryStatus, status));

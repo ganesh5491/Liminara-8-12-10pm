@@ -23,7 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Search, Eye, Truck, Loader2, Package, MapPin, Phone, Mail, ShoppingBag, DollarSign, Clock, CheckCircle, XCircle, TrendingUp } from "lucide-react";
+import { Search, Eye, Truck, Loader2, Package, MapPin, Phone, Mail, ShoppingBag, DollarSign, Clock, CheckCircle, XCircle, TrendingUp, Plus } from "lucide-react";
 
 interface Order {
   id: string;
@@ -77,6 +77,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useNavigate } from "react-router-dom";
 
 export default function OrdersManagement() {
   const [search, setSearch] = useState("");
@@ -86,6 +87,7 @@ export default function OrdersManagement() {
   const [isAssignOpen, setIsAssignOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -94,8 +96,10 @@ export default function OrdersManagement() {
     queryKey: ["/api/admin/orders", { status: statusFilter !== "all" ? statusFilter : undefined, search }],
   });
 
-  const { data: deliveryAgents } = useQuery<DeliveryAgent[]>({
+  const { data: deliveryAgents, isLoading: isLoadingAgents, error: agentsError } = useQuery<DeliveryAgent[]>({
     queryKey: ["/api/admin/delivery-agents/available"],
+    retry: 3,
+    staleTime: 30000,
   });
 
   const updateStatusMutation = useMutation({
@@ -563,6 +567,12 @@ export default function OrdersManagement() {
               }
             }}
             isAssigning={assignDeliveryMutation.isPending}
+            onCreateNewAgent={() => {
+              setIsAssignOpen(false);
+              navigate("/admin/delivery-agents");
+            }}
+            isLoadingAgents={isLoadingAgents}
+            agentsError={agentsError}
           />
         </DialogContent>
       </Dialog>
@@ -695,46 +705,82 @@ function AssignDeliveryForm({
   agents,
   onAssign,
   isAssigning,
+  onCreateNewAgent,
+  isLoadingAgents,
+  agentsError,
 }: {
   order: Order | null;
   agents: DeliveryAgent[];
   onAssign: (agentId: string) => void;
   isAssigning: boolean;
+  onCreateNewAgent: () => void;
+  isLoadingAgents: boolean;
+  agentsError: Error | null;
 }) {
   const [selectedAgent, setSelectedAgent] = useState("");
 
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label>Select Delivery Agent</Label>
-        <Select value={selectedAgent} onValueChange={setSelectedAgent}>
-          <SelectTrigger data-testid="select-delivery-agent">
-            <SelectValue placeholder="Choose an agent" />
-          </SelectTrigger>
-          <SelectContent>
-            {agents.map((agent) => (
-              <SelectItem key={agent.id} value={agent.id}>
-                {agent.name} ({agent.phone})
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      {agents.length === 0 && (
-        <p className="text-sm text-muted-foreground">No delivery agents available</p>
-      )}
-      <Button
-        onClick={() => onAssign(selectedAgent)}
-        disabled={!selectedAgent || isAssigning}
-        className="w-full bg-gradient-to-r from-pink-500 to-purple-500"
-        data-testid="button-confirm-assign"
-      >
-        {isAssigning ? (
-          <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Assigning...</>
+        <div className="flex items-center justify-between mb-2">
+          <Label>Select Delivery Agent</Label>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onCreateNewAgent}
+            className="text-xs h-auto py-1 px-2 text-pink-600 hover:text-pink-700 hover:bg-pink-50"
+            title="Create new delivery agent"
+          >
+            <Plus className="h-4 w-4 mr-1" />
+            New Agent
+          </Button>
+        </div>
+        {isLoadingAgents ? (
+          <div className="flex items-center justify-center py-6">
+            <Loader2 className="h-5 w-5 animate-spin text-pink-500" />
+          </div>
+        ) : agentsError ? (
+          <div className="py-3 px-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+            <p className="font-medium">Failed to load delivery agents</p>
+            <p className="text-xs text-red-600 mt-1">{agentsError.message}</p>
+          </div>
+        ) : agents.length === 0 ? (
+          <div className="py-4 px-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-800 font-medium">No delivery agents available</p>
+            <p className="text-xs text-yellow-700 mt-1">
+              Create a new delivery agent to assign orders
+            </p>
+          </div>
         ) : (
-          "Assign Agent"
+          <Select value={selectedAgent} onValueChange={setSelectedAgent}>
+            <SelectTrigger data-testid="select-delivery-agent">
+              <SelectValue placeholder="Choose an agent" />
+            </SelectTrigger>
+            <SelectContent>
+              {agents.map((agent) => (
+                <SelectItem key={agent.id} value={agent.id}>
+                  {agent.name} ({agent.phone})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         )}
-      </Button>
+      </div>
+
+      {!isLoadingAgents && agents.length > 0 && (
+        <Button
+          onClick={() => onAssign(selectedAgent)}
+          disabled={!selectedAgent || isAssigning}
+          className="w-full bg-gradient-to-r from-pink-500 to-purple-500"
+          data-testid="button-confirm-assign"
+        >
+          {isAssigning ? (
+            <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Assigning...</>
+          ) : (
+            "Assign Agent"
+          )}
+        </Button>
+      )}
     </div>
   );
 }

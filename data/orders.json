@@ -17,7 +17,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-11-27T15:11:28.607Z",
-    "updatedAt": "2025-11-27T15:11:28.607Z"
+    "updatedAt": "2025-11-27T15:11:28.607Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   },
   {
     "id": "763ea665-47a6-43e9-9ec2-9e3ca295fdeb",
@@ -37,7 +39,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-11-27T15:36:32.115Z",
-    "updatedAt": "2025-11-27T15:36:32.115Z"
+    "updatedAt": "2025-11-27T15:36:32.115Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   },
   {
     "id": "25b7e5fd-8675-4971-8f20-69a590ca4ae9",
@@ -49,7 +53,7 @@
     "customerEmail": "lifeinside109@gmail.com",
     "shippingAddress": "kjhk, jhjk,, jkmkm, yhkjm",
     "pincode": "465322",
-    "status": "pending",
+    "status": "picked_up",
     "paymentId": null,
     "paymentStatus": "pending",
     "razorpayOrderId": null,
@@ -57,7 +61,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-11-28T16:06:14.948Z",
-    "updatedAt": "2025-11-28T16:06:14.948Z"
+    "updatedAt": "2025-11-28T16:06:14.948Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "picked_up"
   },
   {
     "id": "e33df617-725c-4d08-90ef-eb6e18ce4a7d",
@@ -69,7 +75,7 @@
     "customerEmail": "lifeinside109@gmail.com",
     "shippingAddress": "pune, pune, pune, mh",
     "pincode": "123456",
-    "status": "pending",
+    "status": "delivered",
     "paymentId": null,
     "paymentStatus": "pending",
     "razorpayOrderId": null,
@@ -77,7 +83,10 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-11-28T18:05:58.909Z",
-    "updatedAt": "2025-11-28T18:05:58.909Z"
+    "updatedAt": "2025-11-28T18:05:58.909Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "delivered",
+    "completionDate": "2025-12-09T18:00:00.000Z"
   },
   {
     "id": "cb0ddfc8-3bb0-4762-a88c-2372b2c37d66",
@@ -117,7 +126,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-11-29T11:57:22.408Z",
-    "updatedAt": "2025-11-29T11:57:22.408Z"
+    "updatedAt": "2025-11-29T11:57:22.408Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   },
   {
     "id": "b9050858-fe03-4c11-b295-16f34d600300",
@@ -217,7 +228,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-12-01T15:08:15.689Z",
-    "updatedAt": "2025-12-01T15:08:15.689Z"
+    "updatedAt": "2025-12-09T19:08:46.917Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   },
   {
     "id": "7c97369c-c461-4c05-b200-bbdcc5d26bd0",
@@ -237,7 +250,9 @@
     "status": "pending",
     "trackingId": null,
     "createdAt": "2025-12-01T15:38:35.888Z",
-    "updatedAt": "2025-12-01T15:38:35.888Z"
+    "updatedAt": "2025-12-09T18:33:26.249Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   },
   {
     "id": "baff24d8-3d5a-42e6-bbe6-b6b7b3dccbcb",
@@ -249,7 +264,7 @@
     "customerEmail": "ganeshkale030303@gmail.com",
     "shippingAddress": "bhumkar chowk, pune, Pune, Maharashtra",
     "pincode": "411057",
-    "status": "pending",
+    "status": "packed",
     "paymentId": null,
     "paymentStatus": "pending",
     "razorpayOrderId": null,
@@ -257,7 +272,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-12-01T17:06:52.658Z",
-    "updatedAt": "2025-12-01T17:06:52.658Z"
+    "updatedAt": "2025-12-09T18:51:10.991Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   },
   {
     "id": "ef161c34-ff17-4f2f-9f26-18c851390bdb",
@@ -269,7 +286,7 @@
     "customerEmail": "ganeshkale030303@gmail.com",
     "shippingAddress": "bhumkar chowk, pune, Pune, Maharashtra",
     "pincode": "411057",
-    "status": "out_for_delivery",
+    "status": "packed",
     "paymentId": null,
     "paymentStatus": "pending",
     "razorpayOrderId": null,
@@ -277,7 +294,9 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-12-05T09:50:11.794Z",
-    "updatedAt": "2025-12-08T16:09:49.370Z"
+    "updatedAt": "2025-12-09T18:51:24.796Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "out_for_delivery"
   },
   {
     "id": "7c087aa1-26fe-4ed2-9114-321364d7ac35",
@@ -289,7 +308,7 @@
     "customerEmail": "ganeshkale030303@gmail.com",
     "shippingAddress": "bhumkar chowk, pune",
     "pincode": "411057",
-    "status": "pending",
+    "status": "confirmed",
     "paymentId": null,
     "paymentStatus": "pending",
     "razorpayOrderId": null,
@@ -297,6 +316,8 @@
     "razorpaySignature": null,
     "trackingId": null,
     "createdAt": "2025-12-08T16:13:40.499Z",
-    "updatedAt": "2025-12-08T16:13:40.499Z"
+    "updatedAt": "2025-12-09T18:49:00.762Z",
+    "deliveryAgentId": "14c47600-0f9a-47bf-93e8-af5af0af067e",
+    "deliveryStatus": "assigned"
   }
 ]

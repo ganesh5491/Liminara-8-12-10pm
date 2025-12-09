@@ -89,6 +89,8 @@ export const deliveryAgents = pgTable("delivery_agents", {
   cancelledDeliveries: integer("cancelled_deliveries").default(0),
   rating: decimal("rating", { precision: 3, scale: 2 }).default("0"),
   earnings: decimal("earnings", { precision: 10, scale: 2 }).default("0"),
+  vehicleType: varchar("vehicle_type"),
+  vehicleNumber: varchar("vehicle_number"),
   lastLogin: timestamp("last_login"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

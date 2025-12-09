@@ -52,6 +52,8 @@ interface DeliveryAgent {
   completedDeliveries: number;
   cancelledDeliveries: number;
   rating?: string;
+  vehicleType?: string;
+  vehicleNumber?: string;
   createdAt: string;
 }
 
@@ -381,6 +383,8 @@ function AgentForm({
     sameAsPermAddress: agent?.sameAsPermAddress || false,
     aadharNumber: agent?.aadharNumber || "",
     panNumber: agent?.panNumber || "",
+    vehicleType: agent?.vehicleType || "",
+    vehicleNumber: agent?.vehicleNumber || "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -516,6 +520,37 @@ function AgentForm({
               />
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h4 className="font-medium flex items-center gap-2">
+          <Truck className="h-4 w-4" />
+          Vehicle Information
+        </h4>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="vehicleType">Vehicle Type</Label>
+            <Input
+              id="vehicleType"
+              value={formData.vehicleType}
+              onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
+              placeholder="e.g. Bike, Scooter, Van"
+              data-testid="input-agent-vehicle-type"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="vehicleNumber">Vehicle Number</Label>
+            <Input
+              id="vehicleNumber"
+              value={formData.vehicleNumber}
+              onChange={(e) => setFormData({ ...formData, vehicleNumber: e.target.value })}
+              placeholder="e.g. MH-12-AB-1234"
+              data-testid="input-agent-vehicle-number"
+            />
+          </div>
         </div>
       </div>
 

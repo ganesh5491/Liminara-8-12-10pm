@@ -76,6 +76,13 @@ import AdminSettings from "@/pages/admin/settings";
 import DeliveryLogin from "@/pages/delivery/login";
 import DeliveryLayout from "@/pages/delivery/layout";
 import DeliveryDashboard from "@/pages/delivery/dashboard";
+import DeliveryChangePassword from "@/pages/delivery/change-password";
+import DeliveryPending from "@/pages/delivery/pending";
+import DeliveryActive from "@/pages/delivery/active";
+import DeliveryCompleted from "@/pages/delivery/completed";
+import DeliveryCancelled from "@/pages/delivery/cancelled";
+import DeliveryProfile from "@/pages/delivery/profile";
+import DeliveryOrderDetail from "@/pages/delivery/order-detail";
 
 function MainAppContent() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -188,8 +195,15 @@ function AppContent() {
     return (
       <Routes>
         <Route path="/delivery/login" element={<DeliveryLogin />} />
+        <Route path="/delivery/change-password" element={<DeliveryChangePassword />} />
         <Route path="/delivery" element={<DeliveryLayout />}>
           <Route path="dashboard" element={<DeliveryDashboard />} />
+          <Route path="pending" element={<DeliveryPending />} />
+          <Route path="active" element={<DeliveryActive />} />
+          <Route path="completed" element={<DeliveryCompleted />} />
+          <Route path="cancelled" element={<DeliveryCancelled />} />
+          <Route path="order/:id" element={<DeliveryOrderDetail />} />
+          <Route path="profile" element={<DeliveryProfile />} />
         </Route>
       </Routes>
     );

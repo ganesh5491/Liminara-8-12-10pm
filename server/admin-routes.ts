@@ -1425,6 +1425,35 @@ export function registerAdminRoutes(app: Express) {
     }
   });
 
+  // Update delivery agent profile
+  app.put("/api/delivery/profile", requireDeliveryAuth, async (req, res) => {
+    try {
+      const { name, phone, vehicleType, vehicleNumber } = req.body;
+      const agentId = req.session.deliveryAgent!.id;
+
+      const updatedAgent = await AdminStorage.updateDeliveryAgent(agentId, {
+        name,
+        phone,
+        vehicleType,
+        vehicleNumber,
+      });
+
+      if (!updatedAgent) {
+        return res.status(404).json({ message: "Agent not found" });
+      }
+
+      // Update session data
+      req.session.deliveryAgent = {
+        ...req.session.deliveryAgent!,
+        name: updatedAgent.name,
+      };
+
+      res.json(updatedAgent);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message || "Failed to update profile" });
+    }
+  });
+
   // Delivery agent forgot password
   app.post("/api/delivery/auth/forgot-password", async (req, res) => {
     try {
