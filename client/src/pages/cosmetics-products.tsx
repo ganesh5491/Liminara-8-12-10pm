@@ -658,7 +658,7 @@ function ProductCard({ product }: { product: any }) {
           </div>
 
           {/* Quick View */}
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileHover={{ opacity: 1, y: 0 }}
             className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300"
@@ -667,7 +667,7 @@ function ProductCard({ product }: { product: any }) {
               <Eye className="h-4 w-4 mr-2" />
               Quick View
             </Button>
-          </motion.button>
+          </motion.div>
         </div>
 
         {/* Content */}
