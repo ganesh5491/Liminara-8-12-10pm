@@ -47,7 +47,7 @@ export default function CustomersManagement() {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
-  const [activeTab, setActiveTab] = useState("list");
+  const [activeTab, setActiveTab] = useState("dashboard");
   const { toast } = useToast();
 
   const [currentPage, setCurrentPage] = useState(1);
