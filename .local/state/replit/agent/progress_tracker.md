@@ -305,6 +305,11 @@
 [x] 269. Installed missing npm dependencies (concurrently, cross-env, tsx)
 [x] 270. Workflow configured and application running on port 5000
 [x] 271. MIGRATION COMPLETE: All systems operational in Replit environment
+[x] 272. Fixed JSON file paths in all API controllers to use root 'data/' directory
+[x] 273. Added createUser function for adding customers from admin section
+[x] 274. Added POST /users route to content-management routes
+[ ] 275. Add Orders dashboard section similar to Customers section
+[ ] 276. Update admin sections to show dashboard first, then list on click
 [x] 269. All dependencies installed and application running without errors on port 5000
 [x] 270. Database schema pushed and seeded with complete product catalog
 [x] 271. Authentication, payments, and all core functionality fully operational

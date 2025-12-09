@@ -6,10 +6,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const usersFile = path.join(__dirname, '../data/users.json');
-const reviewsFile = path.join(__dirname, '../data/productReviews.json');
-const questionsFile = path.join(__dirname, '../data/productQuestions.json');
-const inquiriesFile = path.join(__dirname, '../data/contactInquiries.json');
+const usersFile = path.join(__dirname, '../../data/users.json');
+const reviewsFile = path.join(__dirname, '../../data/productReviews.json');
+const questionsFile = path.join(__dirname, '../../data/productQuestions.json');
+const inquiriesFile = path.join(__dirname, '../../data/contactInquiries.json');
 
 // Read JSON file safely
 const readJSON = (filePath) => {
@@ -124,6 +124,56 @@ exports.deleteUser = async (req, res) => {
   } catch (error) {
     console.error('Delete user error:', error);
     res.status(500).json({ message: 'Error deleting user' });
+  }
+};
+
+// Create new user/customer
+exports.createUser = async (req, res) => {
+  try {
+    if (!req.session.adminId) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    const { name, email, phone, address, city, state, pincode, status } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({ message: 'Name and email are required' });
+    }
+
+    const users = readJSON(usersFile);
+    
+    // Check if email already exists
+    const existingUser = users.find(u => u.email === email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    const newUser = {
+      id: Date.now().toString(),
+      name,
+      email,
+      phone: phone || '',
+      address: address || '',
+      city: city || '',
+      state: state || '',
+      pincode: pincode || '',
+      status: status || 'active',
+      totalOrders: 0,
+      totalSpent: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    users.push(newUser);
+    writeJSON(usersFile, users);
+
+    res.status(201).json({
+      message: 'Customer created successfully',
+      user: newUser,
+    });
+  } catch (error) {
+    console.error('Create user error:', error);
+    res.status(500).json({ message: 'Error creating customer' });
   }
 };
 

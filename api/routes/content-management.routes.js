@@ -10,6 +10,7 @@ const contentController = require('../controllers/content-management.controller'
 // ========================= USER ROUTES =========================
 router.get('/users', contentController.getAllUsers);
 router.get('/users/:id', contentController.getUser);
+router.post('/users', contentController.createUser);
 router.put('/users/:id/status', contentController.updateUserStatus);
 router.delete('/users/:id', contentController.deleteUser);
 

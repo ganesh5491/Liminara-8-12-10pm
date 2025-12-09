@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const productsFile = path.join(__dirname, '../data/products.json');
+const productsFile = path.join(__dirname, '../../data/products.json');
 
 // Read JSON file safely
 const readJSON = (filePath) => {

@@ -8,13 +8,13 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 
 // File paths for data storage
-const adminsFile = path.join(__dirname, '../data/admins.json');
-const usersFile = path.join(__dirname, '../data/users.json');
-const productsFile = path.join(__dirname, '../data/products.json');
-const ordersFile = path.join(__dirname, '../data/orders.json');
-const reviewsFile = path.join(__dirname, '../data/productReviews.json');
-const inquiriesFile = path.join(__dirname, '../data/contactInquiries.json');
-const questionsFile = path.join(__dirname, '../data/productQuestions.json');
+const adminsFile = path.join(__dirname, '../../data/adminUsers.json');
+const usersFile = path.join(__dirname, '../../data/users.json');
+const productsFile = path.join(__dirname, '../../data/products.json');
+const ordersFile = path.join(__dirname, '../../data/orders.json');
+const reviewsFile = path.join(__dirname, '../../data/productReviews.json');
+const inquiriesFile = path.join(__dirname, '../../data/contactInquiries.json');
+const questionsFile = path.join(__dirname, '../../data/productQuestions.json');
 
 // Initialize files if they don't exist
 const initializeFiles = () => {

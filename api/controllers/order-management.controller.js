@@ -6,8 +6,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const ordersFile = path.join(__dirname, '../data/orders.json');
-const agentsFile = path.join(__dirname, '../data/deliveryAgents.json');
+const ordersFile = path.join(__dirname, '../../data/orders.json');
+const agentsFile = path.join(__dirname, '../../data/deliveryAgents.json');
 
 // Read JSON file safely
 const readJSON = (filePath) => {
