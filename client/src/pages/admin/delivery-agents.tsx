@@ -123,11 +123,17 @@ export default function DeliveryAgentsManagement() {
           <h2 className="text-2xl font-bold tracking-tight">Delivery Agents</h2>
           <p className="text-muted-foreground">Manage delivery personnel and their assignments</p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+        <Dialog open={isDialogOpen} onOpenChange={(open) => {
+          if (!open) handleCloseDialog();
+          setIsDialogOpen(open);
+        }}>
           <DialogTrigger asChild>
             <Button
               className="bg-gradient-to-r from-pink-500 to-purple-500"
-              onClick={() => setEditingAgent(null)}
+              onClick={() => {
+                setEditingAgent(null);
+                setIsDialogOpen(true);
+              }}
               data-testid="button-add-agent"
             >
               <Plus className="mr-2 h-4 w-4" />

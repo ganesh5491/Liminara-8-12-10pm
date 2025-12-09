@@ -108,6 +108,8 @@ function loadAllJsonData() {
   jsonOrders.clear();
   jsonOrderItems.clear();
   jsonProducts.clear();
+  jsonCategories.clear();
+  jsonDeliveryAgents.clear();
 
   // Note: We don't clear cached Roles/AdminUsers as they are managed primarily by this file
   // But for safety let's reload everything consistent with file state
@@ -161,6 +163,23 @@ function loadAllJsonData() {
     jsonProducts.set(product.id, productObj);
   });
 
+  // Load categories
+  const categoriesData = loadJsonFile<Category>("categories.json");
+  categoriesData.forEach((category) => {
+    category.createdAt = new Date(category.createdAt || Date.now());
+    category.updatedAt = new Date(category.updatedAt || Date.now());
+    jsonCategories.set(category.id, category);
+  });
+
+  // Load delivery agents
+  const agentsData = loadJsonFile<DeliveryAgent>("deliveryAgents.json");
+  agentsData.forEach((agent) => {
+    agent.createdAt = new Date(agent.createdAt || Date.now());
+    agent.updatedAt = new Date(agent.updatedAt || Date.now());
+    agent.lastLogin = agent.lastLogin ? new Date(agent.lastLogin) : null;
+    jsonDeliveryAgents.set(agent.id, agent);
+  });
+
   // Load inquiries
   const inquiriesData = loadJsonFile<ContactInquiry>("contactInquiries.json");
   inquiriesData.forEach((inquiry) => {
@@ -195,7 +214,7 @@ function loadAllJsonData() {
   });
 
   isJsonDataLoaded = true;
-  console.log("✅ JSON data loaded: users:", jsonUsers.size, "orders:", jsonOrders.size, "products:", jsonProducts.size, "coupons:", jsonCoupons.size);
+  console.log("✅ JSON data loaded: users:", jsonUsers.size, "orders:", jsonOrders.size, "products:", jsonProducts.size, "agents:", jsonDeliveryAgents.size, "categories:", jsonCategories.size, "coupons:", jsonCoupons.size);
 }
 
 // Initialize default roles for JSON storage
@@ -613,21 +632,44 @@ export async function incrementLoginAttempts(email: string): Promise<void> {
 // DELIVERY AGENT OPERATIONS
 // =====================
 export async function getDeliveryAgents(): Promise<DeliveryAgent[]> {
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    const agents = Array.from(jsonDeliveryAgents.values());
+    return agents.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
   return await db.select().from(deliveryAgents).orderBy(desc(deliveryAgents.createdAt));
 }
 
 export async function getAvailableDeliveryAgents(): Promise<DeliveryAgent[]> {
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    const agents = Array.from(jsonDeliveryAgents.values())
+      .filter(a => a.isActive && a.isAvailable)
+      .sort((a, b) => a.name.localeCompare(b.name));
+    return agents;
+  }
   return await db.select().from(deliveryAgents)
     .where(and(eq(deliveryAgents.isActive, true), eq(deliveryAgents.isAvailable, true)))
     .orderBy(asc(deliveryAgents.name));
 }
 
 export async function getDeliveryAgentById(id: string): Promise<DeliveryAgent | undefined> {
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    return jsonDeliveryAgents.get(id);
+  }
   const result = await db.select().from(deliveryAgents).where(eq(deliveryAgents.id, id)).limit(1);
   return result[0];
 }
 
 export async function getDeliveryAgentByEmail(email: string): Promise<DeliveryAgent | undefined> {
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    for (const agent of jsonDeliveryAgents.values()) {
+      if (agent.email === email) return agent;
+    }
+    return undefined;
+  }
   const result = await db.select().from(deliveryAgents).where(eq(deliveryAgents.email, email)).limit(1);
   return result[0];
 }
@@ -636,10 +678,7 @@ export async function createDeliveryAgent(agent: InsertDeliveryAgent): Promise<D
   const passwordHash = await bcrypt.hash(agent.passwordHash, 10);
 
   if (isJSONStorage) {
-    loadAdminData(); // Ensure agents data is loaded
-    // Need to make sure delivery agents are loaded/saved correctly. 
-    // They seem to be mixed with admin users in some implementations or separate?
-    // Looking at file, there is `jsonDeliveryAgents` map.
+    if (!isJsonDataLoaded) loadAllJsonData();
 
     const newAgent: DeliveryAgent = {
       id: crypto.randomUUID(),
@@ -677,7 +716,7 @@ export async function createDeliveryAgent(agent: InsertDeliveryAgent): Promise<D
     };
 
     jsonDeliveryAgents.set(newAgent.id, newAgent);
-    saveAdminData(); // Assuming saveAdminData saves agents too? Need to verify.
+    saveJsonFile("deliveryAgents.json", Array.from(jsonDeliveryAgents.values()));
     return newAgent;
   }
 
@@ -693,6 +732,18 @@ export async function updateDeliveryAgent(id: string, data: Partial<InsertDelive
   if (data.passwordHash) {
     updateData.passwordHash = await bcrypt.hash(data.passwordHash, 10);
   }
+
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    const agent = jsonDeliveryAgents.get(id);
+    if (!agent) return undefined;
+
+    const updated = { ...agent, ...updateData };
+    jsonDeliveryAgents.set(id, updated);
+    saveJsonFile("deliveryAgents.json", Array.from(jsonDeliveryAgents.values()));
+    return updated;
+  }
+
   const result = await db.update(deliveryAgents)
     .set(updateData)
     .where(eq(deliveryAgents.id, id))
@@ -701,6 +752,13 @@ export async function updateDeliveryAgent(id: string, data: Partial<InsertDelive
 }
 
 export async function deleteDeliveryAgent(id: string): Promise<boolean> {
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    const deleted = jsonDeliveryAgents.delete(id);
+    if (deleted) saveJsonFile("deliveryAgents.json", Array.from(jsonDeliveryAgents.values()));
+    return deleted;
+  }
+
   const result = await db.delete(deliveryAgents).where(eq(deliveryAgents.id, id)).returning();
   return result.length > 0;
 }
@@ -713,9 +771,16 @@ export async function verifyDeliveryAgentPassword(email: string, password: strin
   if (!isValid) return null;
 
   // Update last login
-  await db.update(deliveryAgents)
-    .set({ lastLogin: new Date() })
-    .where(eq(deliveryAgents.id, agent.id));
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    const updated = { ...agent, lastLogin: new Date() };
+    jsonDeliveryAgents.set(agent.id, updated);
+    saveJsonFile("deliveryAgents.json", Array.from(jsonDeliveryAgents.values()));
+  } else {
+    await db.update(deliveryAgents)
+      .set({ lastLogin: new Date() })
+      .where(eq(deliveryAgents.id, agent.id));
+  }
 
   return agent;
 }
@@ -735,7 +800,14 @@ export async function updateDeliveryAgentStats(id: string, completed: boolean): 
     updates.cancelledDeliveries = (agent.cancelledDeliveries || 0) + 1;
   }
 
-  await db.update(deliveryAgents).set(updates).where(eq(deliveryAgents.id, id));
+  if (isJSONStorage) {
+    if (!isJsonDataLoaded) loadAllJsonData();
+    const updated = { ...agent, ...updates };
+    jsonDeliveryAgents.set(id, updated);
+    saveJsonFile("deliveryAgents.json", Array.from(jsonDeliveryAgents.values()));
+  } else {
+    await db.update(deliveryAgents).set(updates).where(eq(deliveryAgents.id, id));
+  }
 }
 
 // =====================
@@ -1591,8 +1663,30 @@ export async function getDashboardStats() {
 // =====================
 // ACTIVITY LOG OPERATIONS
 // =====================
-export async function logActivity(log: InsertActivityLog): Promise<ActivityLog> {
-  const result = await db.insert(activityLogs).values(log).returning();
+export async function logActivity(data: any): Promise<ActivityLog | void> {
+  if (!db) return;
+
+  // Handle both old and new signatures
+  if (data.email !== undefined) {
+    // Old signature - data is InsertActivityLog
+    const result = await db.insert(activityLogs).values(data).returning();
+    return result[0];
+  }
+
+  // New signature - convert object to InsertActivityLog
+  const activityData: InsertActivityLog = {
+    userId: data.userId,
+    userType: data.userType,
+    action: data.action,
+    entityType: data.entityType,
+    entityId: data.entityId || null,
+    ipAddress: data.ipAddress || null,
+    userAgent: data.userAgent || null,
+    details: data.details || null,
+    timestamp: new Date(),
+  };
+
+  const result = await db.insert(activityLogs).values(activityData).returning();
   return result[0];
 }
 

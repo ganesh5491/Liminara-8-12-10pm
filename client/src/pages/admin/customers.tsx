@@ -433,7 +433,10 @@ export default function CustomersManagement() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={isAddOpen} onOpenChange={handleCloseDialog}>
+      <Dialog open={isAddOpen} onOpenChange={(open) => {
+        if (!open) handleCloseDialog();
+        setIsAddOpen(open);
+      }}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>{editingCustomer ? "Edit Customer" : "Add New Customer"}</DialogTitle>
